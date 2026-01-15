@@ -14,6 +14,17 @@ const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+// Persistent storage directory
+const STORAGE_DIR = process.env.STORAGE_DIR || '/data/preoffice-files';
+
+// Ensure storage directory exists
+if (!fs.existsSync(STORAGE_DIR)) {
+  fs.mkdirSync(STORAGE_DIR, { recursive: true });
+  console.log(`Created storage directory: ${STORAGE_DIR}`);
+}
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -154,7 +165,32 @@ app.get('/hosting/discovery', async (req, res) => {
 // WOPI File Operations
 // =============================================================================
 
-// In-memory file storage for demo mode
+// Persistent file storage helpers
+function getStoragePath(fileId) {
+  // Sanitize fileId for filesystem
+  const safeId = fileId.replace(/[^a-zA-Z0-9_-]/g, '_');
+  return path.join(STORAGE_DIR, safeId);
+}
+
+function readFileFromStorage(fileId) {
+  const filePath = getStoragePath(fileId);
+  if (fs.existsSync(filePath)) {
+    return fs.readFileSync(filePath);
+  }
+  return null;
+}
+
+function writeFileToStorage(fileId, content) {
+  const filePath = getStoragePath(fileId);
+  fs.writeFileSync(filePath, content);
+  console.log(`Saved file to persistent storage: ${filePath} (${content.length} bytes)`);
+}
+
+function fileExistsInStorage(fileId) {
+  return fs.existsSync(getStoragePath(fileId));
+}
+
+// Legacy in-memory fallback (kept for compatibility)
 const demoFiles = new Map();
 
 /**
@@ -177,7 +213,7 @@ app.get('/wopi/files/:fileId', requireAuth, async (req, res) => {
     res.json({
       BaseFileName: fileName,
       OwnerId: userId,
-      Size: demoFiles.has(fileId) ? demoFiles.get(fileId).length : 0,
+      Size: fileExistsInStorage(fileId) ? readFileFromStorage(fileId).length : 0,
       UserId: userId,
       Version: Date.now().toString(),
 
@@ -232,15 +268,23 @@ app.get('/wopi/files/:fileId/contents', requireAuth, async (req, res) => {
     const filePath = Buffer.from(fileId, 'base64').toString('utf8');
     console.log(`GetFile for: ${filePath} (fileId: ${fileId})`);
 
-    // Demo mode: return stored content or empty file
+    // Try persistent storage first
+    const storedContent = readFileFromStorage(fileId);
+    if (storedContent) {
+      console.log(`Returning persistent file content (${storedContent.length} bytes)`);
+      res.set('Content-Type', 'application/octet-stream');
+      return res.send(storedContent);
+    }
+
+    // Fall back to in-memory storage
     if (demoFiles.has(fileId)) {
-      console.log(`Returning demo file content (${demoFiles.get(fileId).length} bytes)`);
+      console.log(`Returning in-memory file content (${demoFiles.get(fileId).length} bytes)`);
       res.set('Content-Type', 'application/octet-stream');
       return res.send(demoFiles.get(fileId));
     }
 
     // For new files, return empty content (Collabora will create new document)
-    console.log('No demo file found, returning empty content');
+    console.log('No file found, returning empty content for new document');
     res.set('Content-Type', 'application/octet-stream');
     res.send(Buffer.alloc(0));
   } catch (error) {
@@ -268,10 +312,11 @@ app.post('/wopi/files/:fileId/contents', requireAuth, async (req, res) => {
       return res.status(409).json({ error: 'File is locked' });
     }
 
-    // Demo mode: store in memory
+    // Store to persistent storage
     const content = Buffer.isBuffer(req.body) ? req.body : Buffer.from(req.body);
+    writeFileToStorage(fileId, content);
+    // Also keep in memory for faster subsequent reads
     demoFiles.set(fileId, content);
-    console.log(`Stored demo file (${content.length} bytes)`);
 
     res.json({
       ItemVersion: Date.now().toString()

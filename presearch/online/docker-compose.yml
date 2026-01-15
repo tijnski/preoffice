@@ -42,6 +42,9 @@ services:
       - COLLABORA_PUBLIC_URL=${COLLABORA_PUBLIC_URL:-https://preoffice.site}
       - JWT_SECRET=${JWT_SECRET:-change-this-secret-in-production}
       - COLLABORA_URL=http://collabora:9980
+      - STORAGE_DIR=/data/preoffice-files
+    volumes:
+      - wopi-data:/data/preoffice-files
     depends_on:
       - collabora
     networks:
@@ -81,3 +84,4 @@ networks:
 
 volumes:
   redis-data:
+  wopi-data:
