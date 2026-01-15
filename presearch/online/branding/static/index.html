@@ -6,13 +6,39 @@
     <title>PreOffice Online - Web-based Document Editing</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <style>
+        /* =====================================================
+           PRESEARCH-WEB UI PATTERNS
+           PreOffice Online Landing Page
+           ===================================================== */
+
         :root {
+            /* Presearch Brand Colors */
             --presearch-blue: #0190FF;
+            --presearch-blue-hover: #0177D6;
+            --presearch-blue-light: #E6F4FF;
+            --presearch-blue-muted: #5CB3FF;
             --presearch-dark: #1E1E1E;
-            --background-tint: #E6F4FF;
+            --presearch-dark-surface: #323232;
+
+            /* Background */
+            --background-base: #FFFFFF;
             --background-soft: #FAFBFC;
+            --background-tint: #E6F4FF;
+
+            /* Text */
             --text-primary: #000000;
             --text-secondary: #494949;
+            --text-tertiary: #6B7280;
+
+            /* Shadows */
+            --shadow-primary: 0 4px 14px rgba(1, 144, 255, 0.39);
+            --shadow-primary-hover: 0 6px 20px rgba(1, 144, 255, 0.45);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-card-hover: 0 8px 30px rgba(1, 144, 255, 0.15);
+
+            /* Borders */
+            --border-default: #E8EAED;
+            --border-card: rgba(191, 191, 191, 0.5);
         }
 
         * {
@@ -28,6 +54,104 @@
             color: var(--text-primary);
         }
 
+        /* Smooth transitions for interactive elements */
+        button, a, input {
+            transition: all 0.2s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--presearch-blue);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--presearch-blue-hover);
+        }
+
+        /* =====================================================
+           ANIMATIONS
+           ===================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        .animate-slide-up { animation: slideUp 0.4s ease-out; }
+        .animate-slide-down { animation: slideDown 0.3s ease-out; }
+        .animate-scale-in { animation: scaleIn 0.3s ease-out; }
+
+        /* Loading Dots */
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--presearch-blue);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
         .header {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -40,6 +164,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            animation: slideDown 0.3s ease-out;
         }
 
         .logo {
@@ -48,6 +173,11 @@
             gap: 0.75rem;
             text-decoration: none;
             color: var(--text-primary);
+            transition: transform 0.2s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
         }
 
         .logo svg {
@@ -74,33 +204,60 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.2s;
+            position: relative;
+            transition: color 0.2s ease;
         }
 
-        .nav-links a:hover {
+        .nav-links a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--presearch-blue);
+            transition: width 0.2s ease;
+        }
+
+        .nav-links a:not(.btn):hover {
             color: var(--presearch-blue);
         }
 
+        .nav-links a:not(.btn):hover::after {
+            width: 100%;
+        }
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
         .btn {
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
             cursor: pointer;
             border: none;
             font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
             background: var(--presearch-blue);
             color: white;
+            box-shadow: var(--shadow-primary);
         }
 
         .btn-primary:hover {
-            background: #0177D6;
+            background: var(--presearch-blue-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(1, 144, 255, 0.3);
+            box-shadow: var(--shadow-primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
@@ -110,20 +267,27 @@
         }
 
         .btn-secondary:hover {
-            background: var(--background-tint);
+            background: var(--presearch-blue-light);
+            border-color: var(--presearch-blue-hover);
+            transform: translateY(-1px);
         }
 
+        /* =====================================================
+           HERO SECTION
+           ===================================================== */
         .hero {
             padding: 8rem 2rem 4rem;
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            animation: slideUp 0.5s ease-out;
         }
 
         .hero h1 span {
@@ -137,6 +301,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            animation: slideUp 0.5s ease-out 0.1s both;
         }
 
         .hero-buttons {
@@ -144,8 +309,12 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+            animation: slideUp 0.5s ease-out 0.2s both;
         }
 
+        /* =====================================================
+           APPS SECTION
+           ===================================================== */
         .apps-section {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -162,6 +331,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .app-card {
@@ -169,14 +339,16 @@
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-card);
             cursor: pointer;
+            transition: all 0.2s ease-out;
         }
 
         .app-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--presearch-blue-light);
         }
 
         .app-icon {
@@ -188,12 +360,17 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
+            transition: transform 0.2s ease;
         }
 
-        .app-icon.writer { background: #e3f2fd; }
-        .app-icon.calc { background: #e8f5e9; }
-        .app-icon.impress { background: #fff3e0; }
-        .app-icon.draw { background: #fce4ec; }
+        .app-card:hover .app-icon {
+            transform: scale(1.1);
+        }
+
+        .app-icon.writer { background: var(--presearch-blue-light); }
+        .app-icon.calc { background: #D1FAE5; }
+        .app-icon.impress { background: #FEF3C7; }
+        .app-icon.draw { background: #FCE7F3; }
 
         .app-card h3 {
             font-size: 1.25rem;
@@ -205,6 +382,9 @@
             font-size: 0.95rem;
         }
 
+        /* =====================================================
+           FEATURES SECTION
+           ===================================================== */
         .features-section {
             background: white;
             padding: 4rem 2rem;
@@ -227,6 +407,13 @@
         .feature {
             text-align: center;
             padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .feature:hover {
+            background: var(--background-soft);
+            transform: translateY(-2px);
         }
 
         .feature-icon {
@@ -243,6 +430,9 @@
             font-size: 0.95rem;
         }
 
+        /* =====================================================
+           FOOTER
+           ===================================================== */
         .footer {
             background: var(--presearch-dark);
             color: white;
@@ -251,16 +441,24 @@
         }
 
         .footer a {
-            color: var(--presearch-blue);
+            color: var(--presearch-blue-muted);
             text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--presearch-blue-light);
         }
 
         .footer p {
-            opacity: 0.8;
+            opacity: 0.7;
             margin-top: 1rem;
+            font-size: 0.875rem;
         }
 
-        /* Modal for creating documents */
+        /* =====================================================
+           MODAL - DARK GLASS STYLE
+           ===================================================== */
         .modal {
             display: none;
             position: fixed;
@@ -268,7 +466,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 200;
             align-items: center;
             justify-content: center;
@@ -276,6 +475,7 @@
 
         .modal.active {
             display: flex;
+            animation: fadeIn 0.2s ease-out;
         }
 
         .modal-content {
@@ -284,6 +484,8 @@
             padding: 2rem;
             max-width: 500px;
             width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: scaleIn 0.3s ease-out;
         }
 
         .modal-content h2 {
@@ -293,15 +495,21 @@
         .modal-content input {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 2px solid #e0e0e0;
+            border: 2px solid var(--border-default);
             border-radius: 8px;
             font-size: 1rem;
             margin-bottom: 1rem;
+            transition: all 0.2s ease;
         }
 
         .modal-content input:focus {
             outline: none;
             border-color: var(--presearch-blue);
+            box-shadow: 0 0 0 3px rgba(1, 144, 255, 0.1);
+        }
+
+        .modal-content input::placeholder {
+            color: #9CA3AF;
         }
 
         .modal-buttons {
@@ -310,12 +518,111 @@
             justify-content: flex-end;
         }
 
+        /* =====================================================
+           DARK MODE
+           ===================================================== */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-base: #1E1E1E;
+                --background-soft: #1E1E1E;
+                --background-tint: #252525;
+                --text-primary: #FFFFFF;
+                --text-secondary: #9CA3AF;
+                --border-default: rgba(255, 255, 255, 0.1);
+                --border-card: rgba(255, 255, 255, 0.1);
+                --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+                --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+            }
+
+            body {
+                background: linear-gradient(135deg, #1E1E1E 0%, #252525 100%);
+                color: var(--text-primary);
+            }
+
+            .header {
+                background: var(--presearch-dark);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: none;
+            }
+
+            .logo {
+                color: white;
+            }
+
+            .nav-links a {
+                color: #9CA3AF;
+            }
+
+            .nav-links a:not(.btn):hover {
+                color: var(--presearch-blue);
+            }
+
+            .app-card {
+                background: #323232;
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .app-card:hover {
+                background: #3A3A3A;
+                border-color: rgba(1, 144, 255, 0.3);
+            }
+
+            .app-card h3 {
+                color: white;
+            }
+
+            .features-section {
+                background: #252525;
+            }
+
+            .feature:hover {
+                background: #323232;
+            }
+
+            .feature h3 {
+                color: white;
+            }
+
+            .modal-content {
+                background: rgba(26, 26, 26, 0.95);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                backdrop-filter: blur(16px);
+            }
+
+            .modal-content h2 {
+                color: white;
+            }
+
+            .modal-content input {
+                background: #1E1E1E;
+                border-color: rgba(255, 255, 255, 0.1);
+                color: white;
+            }
+
+            .modal-content input:focus {
+                border-color: var(--presearch-blue);
+            }
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
             .nav-links {
                 display: none;
+            }
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* iOS Zoom Prevention */
+        @media screen and (max-width: 767px) {
+            input:focus {
+                font-size: 16px;
             }
         }
     </style>
@@ -413,7 +720,7 @@
             <input type="text" id="docName" placeholder="Document name">
             <div class="modal-buttons">
                 <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="submitCreate()">Create</button>
+                <button class="btn btn-primary" id="createBtn" onclick="submitCreate()">Create</button>
             </div>
         </div>
     </div>
@@ -431,6 +738,7 @@
             };
             document.getElementById('docName').value = 'Untitled' + extensions[type];
             document.getElementById('createModal').classList.add('active');
+            document.getElementById('docName').focus();
         }
 
         function closeModal() {
@@ -444,6 +752,11 @@
         async function submitCreate() {
             const name = document.getElementById('docName').value;
             if (!name) return;
+
+            const btn = document.getElementById('createBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>';
+            btn.disabled = true;
 
             try {
                 const response = await fetch('/api/create', {
@@ -463,12 +776,18 @@
             } catch (err) {
                 alert('Please sign in to create documents');
                 showLogin();
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         }
 
         // Close modal on escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
+            if (e.key === 'Enter' && document.getElementById('createModal').classList.contains('active')) {
+                submitCreate();
+            }
         });
 
         // Close modal on background click
