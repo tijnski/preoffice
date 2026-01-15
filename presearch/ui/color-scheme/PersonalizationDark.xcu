@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Personalization"
+                    oor:package="org.openoffice.Office.Common">
+
+  <!--
+    PreOffice Dark Mode Personalization Settings
+    Configures the dark theme persona and UI elements
+  -->
+
+  <node oor:name="PersonaSettings">
+    <!-- Enable personalization -->
+    <prop oor:name="ActivePersona">
+      <value>PreOffice_Dark</value>
+    </prop>
+
+    <!-- Dark theme header -->
+    <prop oor:name="PersonaHeader">
+      <value>PreOffice_Dark_Header</value>
+    </prop>
+
+    <!-- Dark theme footer -->
+    <prop oor:name="PersonaFooter">
+      <value>PreOffice_Dark_Footer</value>
+    </prop>
+
+    <!-- Theme text color: Light gray for readability -->
+    <prop oor:name="PersonaTextColor">
+      <value>#E0E0E0</value>
+    </prop>
+
+    <!-- Accent color: Presearch Blue -->
+    <prop oor:name="PersonaAccentColor">
+      <value>#2D8EFF</value>
+    </prop>
+  </node>
+
+</oor:component-data>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             xmlns:d="http://openoffice.org/extensions/description/2006">
+
+  <identifier value="com.presearch.preoffice"/>
+
+  <version value="1.0.0"/>
+
+  <platform value="all"/>
+
+  <!-- No version dependencies - works with any LibreOffice-based build -->
+
+  <display-name>
+    <name lang="en">PreOffice Suite</name>
+    <name lang="nl">PreOffice Suite</name>
+    <name lang="de">PreOffice Suite</name>
+  </display-name>
+
+  <icon>
+    <default xlink:href="icons/preoffice_128.png"/>
+    <high-contrast xlink:href="icons/preoffice_128.png"/>
+  </icon>
+
+  <extension-description>
+    <src lang="en" xlink:href="description/description_en.txt"/>
+  </extension-description>
+
+  <publisher>
+    <name lang="en" xlink:href="https://presearch.com">Presearch</name>
+  </publisher>
+
+  <!-- License included in package but not requiring interactive acceptance -->
+
+  <update-information>
+    <src xlink:href="https://presearch.com/preoffice/update.xml"/>
+  </update-information>
+
+</description>

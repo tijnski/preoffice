@@ -1,0 +1,35 @@
+From: Presearch <engineering@presearch.com>
+Subject: [PATCH] Set privacy-friendly defaults for PreOffice
+
+This patch ensures PreOffice ships with privacy-respecting defaults:
+- ODF as default save format (already default in LO)
+- Crash reporting disabled by default
+- No external connections on startup
+- Tip of the Day disabled
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+--- a/configure.ac
++++ b/configure.ac
+@@ -12000,7 +12000,7 @@ if test "$_os" = "WINNT" -o "$_os" = "Darwin" -o "$_os" = "Linux" ; then
+     AC_MSG_CHECKING([whether to enable crash reporting])
+     AC_MSG_RESULT([no])
+-    DEFAULT_CRASHDUMP_VALUE="true"
++    DEFAULT_CRASHDUMP_VALUE="false"
+ fi
+
+Note: Most privacy settings are already good defaults in LibreOffice.
+Additional privacy hardening is done via:
+1. Disabling UPDATEURL in openoffice.lst.in
+2. Not including external service URLs
+3. Tip of the Day can be disabled via UI defaults
+
+For deployment, consider using:
+--disable-online-update
+--disable-crashdump (or DEFAULT_CRASHDUMP_VALUE=false)
+
+--
+2.39.0

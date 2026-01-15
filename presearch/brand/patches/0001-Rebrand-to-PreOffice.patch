@@ -1,0 +1,75 @@
+From: Presearch <engineering@presearch.com>
+Subject: [PATCH] Rebrand LibreOffice to PreOffice
+
+This patch rebrands LibreOffice to PreOffice for the Presearch Pre-suite.
+Changes:
+- Product name: PreOffice
+- Disable update checking (managed by Presearch)
+- Privacy-friendly defaults
+- Attribution maintained as required
+
+---
+ configure.ac                                | 4 ++--
+ instsetoo_native/util/openoffice.lst.in     | 20 ++++++++++----------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 1234567..abcdefg 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -18,7 +18,7 @@ dnl in order to get correct version number
+ dnl * the move of LO to an arbitrary git repository
+ dnl * the ## LO tag, currently 24.8.0 but could be anything
+ dnl
+-AC_INIT([LibreOffice],[26.8.0.0.alpha0+],[],[],[http://documentfoundation.org/])
++AC_INIT([PreOffice],[1.0.0.0],[],[],[https://presearch.com/preoffice])
+
+ AC_PREREQ([2.59])
+
+diff --git a/instsetoo_native/util/openoffice.lst.in b/instsetoo_native/util/openoffice.lst.in
+index 1234567..abcdefg 100644
+--- a/instsetoo_native/util/openoffice.lst.in
++++ b/instsetoo_native/util/openoffice.lst.in
+@@ -8,9 +8,9 @@ Globals
+             UREPACKAGEVERSION @LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@.@LIBO_VERSION_MICRO@.@LIBO_VERSION_PATCH@@LIBO_VERSION_SUFFIX@
+             URELAYERVERSION 1
+             REFERENCEOOOMAJORMINOR 4.1
+-            WINDOWSBASISROOTNAME LibreOffice
+-            UNIXBASISROOTNAME libreoffice@LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@
++            WINDOWSBASISROOTNAME PreOffice
++            UNIXBASISROOTNAME preoffice@LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@
+             HIDELICENSEDIALOG 1
+             PACKAGEPREFIX
+-            BASISPACKAGEPREFIX libobasis
+-            UREPACKAGEPREFIX libreoffice
+-            SOLSUREPACKAGEPREFIX libreoffice
++            BASISPACKAGEPREFIX preoffice
++            UREPACKAGEPREFIX preoffice
++            SOLSUREPACKAGEPREFIX preoffice
+             PROGRESSBARCOLOR 45,142,255
+             PROGRESSFRAMECOLOR 45,142,255
+             PROGRESSPOSITION 30,145
+@@ -51,7 +51,7 @@ LibreOffice
+             BRANDPACKAGEVERSION @LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@
+             USERDIRPRODUCTVERSION 4
+             BASEPRODUCTVERSION @LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@
+-            UPDATEURL https://update.libreoffice.org/check.php
++            UPDATEURL
+             ADD_INCLUDE_FILES cli_ure/version/version.txt,unoil/climaker/version.txt
+             ADDSYSTEMINTEGRATION 1
+             PACKAGEVERSION @LIBO_VERSION_MAJOR@.@LIBO_VERSION_MINOR@.@LIBO_VERSION_MICRO@.@LIBO_VERSION_PATCH@@LIBO_VERSION_SUFFIX@
+@@ -66,9 +66,9 @@ LibreOffice
+         active          1
+         compression     5
+         script          setup_osl
+-        downloadname    LibreOffice_{productversion}_{os}_install_{languages}
+-        langpackdownloadname    LibreOffice_{productversion}_languagepack_{os}_install_{languages}
+-        helppackdownloadname    LibreOffice_{productversion}_helppack_{os}_install_{languages}
++        downloadname    PreOffice_{productversion}_{os}_install_{languages}
++        langpackdownloadname    PreOffice_{productversion}_languagepack_{os}_install_{languages}
++        helppackdownloadname    PreOffice_{productversion}_helppack_{os}_install_{languages}
+         include         {installscriptdir},{customtargetpath}/readlicense_oo/readme,{customtargetpath}/sysui/{pkgtype},{customtargetpath}/setup_native,{filelistpath}/PackageSet,{filelistpath}/GeneratedPackage,{filelistpath}/Package,{filelistpath}/ExtensionPackage,{filelistpath}/CustomTarget/helpcontent2/help3xsl/filelists,{extensionsdir},{licensepath},{packinfopath}
+     }
+ }
+--
+2.39.0

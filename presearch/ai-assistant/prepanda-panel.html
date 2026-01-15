@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrePanda - AI Writing Assistant</title>
+  <link rel="stylesheet" href="css/prepanda.css">
+</head>
+<body>
+  <div id="prepanda-root"></div>
+
+  <script src="js/prepanda.js"></script>
+  <script>
+    // Initialize PrePanda with configuration
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('prepanda-root');
+
+      // Get API key from environment or config
+      const config = {
+        apiUrl: 'https://api.venice.ai/api/v1',
+        apiKey: '', // Set via environment or settings
+        model: 'llama-3.2-3b',
+        modelAsk: 'llama-3.3-70b',
+        maxTokens: 500,
+        temperature: 0.7
+      };
+
+      // Try to get API key from query params (for testing)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('apiKey')) {
+        config.apiKey = urlParams.get('apiKey');
+      }
+
+      // Initialize PrePanda
+      const prepanda = new PrePandaAssistant(config);
+      prepanda.init(container);
+
+      // Expose globally for LibreOffice integration
+      window.prepanda = prepanda;
+
+      // Listen for messages from LibreOffice
+      window.addEventListener('message', function(event) {
+        const data = event.data;
+
+        if (data.type === 'setContext') {
+          prepanda.setDocumentContext(data.text, data.docName);
+        } else if (data.type === 'setApiKey') {
+          prepanda.setConfig({ apiKey: data.apiKey });
+        } else if (data.type === 'ask') {
+          prepanda.sendMessage(data.question);
+        } else if (data.type === 'action') {
+          prepanda.handleQuickAction(data.action);
+        } else if (data.type === 'setDarkMode') {
+          prepanda.setDarkMode(data.enabled);
+        }
+      });
+
+      // Notify parent that PrePanda is ready
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: 'prepandaReady' }, '*');
+      }
+    });
+  </script>
+</body>
+</html>

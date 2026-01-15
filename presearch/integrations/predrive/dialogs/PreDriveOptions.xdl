@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog"
+            xmlns:script="http://openoffice.org/2000/script"
+            dlg:id="PreDriveOptions"
+            dlg:left="0"
+            dlg:top="0"
+            dlg:width="260"
+            dlg:height="185"
+            dlg:closeable="true"
+            dlg:moveable="true"
+            dlg:title="PreDrive Settings">
+
+    <!-- Server Configuration Group -->
+    <dlg:titledbox dlg:id="ServerGroup"
+                   dlg:left="6"
+                   dlg:top="6"
+                   dlg:width="248"
+                   dlg:height="55">
+        <dlg:title dlg:value="Server Configuration"/>
+    </dlg:titledbox>
+
+    <dlg:text dlg:id="ServerUrlLabel"
+              dlg:left="12"
+              dlg:top="22"
+              dlg:width="60"
+              dlg:height="10"
+              dlg:value="Server URL:"/>
+
+    <dlg:textfield dlg:id="ServerUrl"
+                   dlg:left="75"
+                   dlg:top="20"
+                   dlg:width="170"
+                   dlg:height="14"
+                   dlg:tabindex="0"
+                   dlg:value="http://localhost:4000"/>
+
+    <dlg:text dlg:id="ServerUrlHint"
+              dlg:left="75"
+              dlg:top="36"
+              dlg:width="170"
+              dlg:height="10"
+              dlg:value="e.g., https://drive.presearch.com"
+              dlg:fontsize="8"/>
+
+    <!-- Authentication Group -->
+    <dlg:titledbox dlg:id="AuthGroup"
+                   dlg:left="6"
+                   dlg:top="65"
+                   dlg:width="248"
+                   dlg:height="70">
+        <dlg:title dlg:value="Authentication"/>
+    </dlg:titledbox>
+
+    <dlg:text dlg:id="EmailLabel"
+              dlg:left="12"
+              dlg:top="81"
+              dlg:width="60"
+              dlg:height="10"
+              dlg:value="Email:"/>
+
+    <dlg:textfield dlg:id="Email"
+                   dlg:left="75"
+                   dlg:top="79"
+                   dlg:width="170"
+                   dlg:height="14"
+                   dlg:tabindex="1"/>
+
+    <dlg:text dlg:id="TokenLabel"
+              dlg:left="12"
+              dlg:top="100"
+              dlg:width="60"
+              dlg:height="10"
+              dlg:value="JWT Token:"/>
+
+    <dlg:textfield dlg:id="JwtToken"
+                   dlg:left="75"
+                   dlg:top="98"
+                   dlg:width="170"
+                   dlg:height="14"
+                   dlg:tabindex="2"
+                   dlg:echochar="*"/>
+
+    <dlg:checkbox dlg:id="RememberCredentials"
+                  dlg:left="75"
+                  dlg:top="116"
+                  dlg:width="170"
+                  dlg:height="12"
+                  dlg:tabindex="3"
+                  dlg:value="Remember credentials"
+                  dlg:checked="true"/>
+
+    <!-- Status -->
+    <dlg:titledbox dlg:id="StatusGroup"
+                   dlg:left="6"
+                   dlg:top="140"
+                   dlg:width="248"
+                   dlg:height="35">
+        <dlg:title dlg:value="Connection Status"/>
+    </dlg:titledbox>
+
+    <dlg:text dlg:id="StatusLabel"
+              dlg:left="12"
+              dlg:top="156"
+              dlg:width="150"
+              dlg:height="10"
+              dlg:value="Not connected"/>
+
+    <dlg:button dlg:id="TestConnection"
+                dlg:left="175"
+                dlg:top="153"
+                dlg:width="70"
+                dlg:height="14"
+                dlg:tabindex="4"
+                dlg:value="Test Connection">
+        <script:event script:event-name="on-performaction"
+                      script:macro-name="vnd.sun.star.script:PreDrive.predrive.TestConnection?language=Python&amp;location=user"/>
+    </dlg:button>
+
+</dlg:window>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog"
+            dlg:id="PrePandaSidebar"
+            dlg:left="0" dlg:top="0"
+            dlg:width="170" dlg:height="310"
+            dlg:closeable="false"
+            dlg:moveable="false"
+            dlg:withtitlebar="false">
+ <dlg:bulletinboard>
+
+  <!-- HEADER (compact) -->
+  <dlg:text dlg:id="lblHeader"
+            dlg:left="3" dlg:top="2"
+            dlg:width="164" dlg:height="10"
+            dlg:value="PrePanda AI"
+            dlg:align="center"/>
+
+  <dlg:text dlg:id="lblModel"
+            dlg:left="3" dlg:top="12"
+            dlg:width="164" dlg:height="8"
+            dlg:value="llama-3.3-70b"
+            dlg:align="center"/>
+
+  <!-- QUICK ACTIONS Row 1 (compact buttons) -->
+  <dlg:button dlg:id="btnAsk"
+              dlg:tab-index="0"
+              dlg:left="3" dlg:top="22"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Ask"/>
+
+  <dlg:button dlg:id="btnImprove"
+              dlg:tab-index="1"
+              dlg:left="58" dlg:top="22"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Improve"/>
+
+  <dlg:button dlg:id="btnProofread"
+              dlg:tab-index="2"
+              dlg:left="113" dlg:top="22"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Proofread"/>
+
+  <!-- QUICK ACTIONS Row 2 -->
+  <dlg:button dlg:id="btnSummarize"
+              dlg:tab-index="3"
+              dlg:left="3" dlg:top="38"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Summarize"/>
+
+  <dlg:button dlg:id="btnTranslate"
+              dlg:tab-index="4"
+              dlg:left="58" dlg:top="38"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Translate"/>
+
+  <dlg:button dlg:id="btnExplain"
+              dlg:tab-index="5"
+              dlg:left="113" dlg:top="38"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Explain"/>
+
+  <!-- QUICK ACTIONS Row 3 -->
+  <dlg:button dlg:id="btnBullets"
+              dlg:tab-index="6"
+              dlg:left="3" dlg:top="54"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Bullets"/>
+
+  <dlg:button dlg:id="btnContinue"
+              dlg:tab-index="7"
+              dlg:left="58" dlg:top="54"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Continue"/>
+
+  <dlg:button dlg:id="btnTone"
+              dlg:tab-index="8"
+              dlg:left="113" dlg:top="54"
+              dlg:width="53" dlg:height="14"
+              dlg:value="Tone"/>
+
+  <!-- SEPARATOR -->
+  <dlg:fixedline dlg:id="sep1"
+                 dlg:left="3" dlg:top="70"
+                 dlg:width="164" dlg:height="1"/>
+
+  <!-- STATUS (compact) -->
+  <dlg:text dlg:id="lblStatus"
+            dlg:left="3" dlg:top="73"
+            dlg:width="164" dlg:height="8"
+            dlg:value="Ready - select text and click an action"/>
+
+  <!-- OUTPUT AREA (reduced height, still scrollable) -->
+  <dlg:textfield dlg:id="txtOutput"
+                 dlg:tab-index="9"
+                 dlg:left="3" dlg:top="83"
+                 dlg:width="164" dlg:height="140"
+                 dlg:multiline="true"
+                 dlg:vscroll="true"
+                 dlg:hscroll="true"
+                 dlg:readonly="true"/>
+
+  <!-- SEPARATOR -->
+  <dlg:fixedline dlg:id="sep2"
+                 dlg:left="3" dlg:top="226"
+                 dlg:width="164" dlg:height="1"/>
+
+  <!-- INPUT LABEL (compact) -->
+  <dlg:text dlg:id="lblInput"
+            dlg:left="3" dlg:top="229"
+            dlg:width="164" dlg:height="8"
+            dlg:value="Ask PrePanda anything:"/>
+
+  <!-- INPUT FIELD (compact, ~2 lines) -->
+  <dlg:textfield dlg:id="txtInput"
+                 dlg:tab-index="10"
+                 dlg:left="3" dlg:top="238"
+                 dlg:width="164" dlg:height="26"
+                 dlg:multiline="true"
+                 dlg:vscroll="true"/>
+
+  <!-- SEND/CLEAR (compact) -->
+  <dlg:button dlg:id="btnSend"
+              dlg:tab-index="11"
+              dlg:left="3" dlg:top="266"
+              dlg:width="80" dlg:height="14"
+              dlg:value="Send"
+              dlg:default="true"/>
+
+  <dlg:button dlg:id="btnClear"
+              dlg:tab-index="12"
+              dlg:left="87" dlg:top="266"
+              dlg:width="80" dlg:height="14"
+              dlg:value="Clear"/>
+
+  <!-- RESPONSE ACTIONS (compact) -->
+  <dlg:button dlg:id="btnApply"
+              dlg:tab-index="13"
+              dlg:left="3" dlg:top="282"
+              dlg:width="53" dlg:height="12"
+              dlg:value="Apply"/>
+
+  <dlg:button dlg:id="btnCopy"
+              dlg:tab-index="14"
+              dlg:left="58" dlg:top="282"
+              dlg:width="53" dlg:height="12"
+              dlg:value="Copy"/>
+
+  <dlg:button dlg:id="btnSettings"
+              dlg:tab-index="15"
+              dlg:left="113" dlg:top="282"
+              dlg:width="53" dlg:height="12"
+              dlg:value="Settings"/>
+
+ </dlg:bulletinboard>
+</dlg:window>

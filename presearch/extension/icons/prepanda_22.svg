@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+  <!-- PrePanda toolbar icon - simplified -->
+  <circle cx="11" cy="11" r="10" fill="#2D8EFF"/>
+
+  <!-- Panda face simplified -->
+  <ellipse cx="11" cy="12" rx="7" ry="6" fill="#ffffff"/>
+
+  <!-- Ears -->
+  <circle cx="5" cy="6" r="2.5" fill="#333"/>
+  <circle cx="17" cy="6" r="2.5" fill="#333"/>
+
+  <!-- Eye patches -->
+  <ellipse cx="8" cy="11" rx="2.5" ry="2" fill="#333"/>
+  <ellipse cx="14" cy="11" rx="2.5" ry="2" fill="#333"/>
+
+  <!-- Eyes -->
+  <circle cx="8.3" cy="10.5" r="1" fill="#fff"/>
+  <circle cx="14.3" cy="10.5" r="1" fill="#fff"/>
+
+  <!-- Nose -->
+  <ellipse cx="11" cy="14" rx="1.2" ry="0.8" fill="#333"/>
+</svg>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Writer Defaults
+  - Notebookbar mode
+  - Modern formatting defaults
+-->
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Writer"
+                    oor:package="org.openoffice.Office">
+
+  <!-- Layout settings -->
+  <node oor:name="Layout">
+    <node oor:name="Other">
+      <!-- Show ruler -->
+      <prop oor:name="IsHRuler">
+        <value>true</value>
+      </prop>
+      <prop oor:name="IsVRuler">
+        <value>true</value>
+      </prop>
+    </node>
+  </node>
+
+  <!-- Content display -->
+  <node oor:name="Content">
+    <node oor:name="Display">
+      <!-- Show images inline -->
+      <prop oor:name="GraphicObject">
+        <value>true</value>
+      </prop>
+    </node>
+  </node>
+
+</oor:component-data>

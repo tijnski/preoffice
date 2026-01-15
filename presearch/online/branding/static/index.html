@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreOffice Online - Web-based Document Editing</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <style>
+        :root {
+            --presearch-blue: #2D8EFF;
+            --presearch-dark: #1a1a2e;
+            --background-tint: #EAF3FF;
+            --background-soft: #FAFBFC;
+            --text-primary: #000000;
+            --text-secondary: #494949;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, var(--background-soft) 0%, var(--background-tint) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--presearch-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--presearch-blue);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--presearch-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1a7ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 142, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--presearch-blue);
+            border: 2px solid var(--presearch-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--background-tint);
+        }
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--presearch-blue);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .apps-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .apps-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .app-icon.writer { background: #e3f2fd; }
+        .app-icon.calc { background: #e8f5e9; }
+        .app-icon.impress { background: #fff3e0; }
+        .app-icon.draw { background: #fce4ec; }
+
+        .app-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .features-section {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            background: var(--presearch-dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--presearch-blue);
+            text-decoration: none;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+
+        /* Modal for creating documents */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: var(--presearch-blue);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="#2D8EFF"/>
+                <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="logo-text">Pre<span>Office</span> Online</span>
+        </a>
+        <nav class="nav-links">
+            <a href="https://predrive.eu">PreDrive</a>
+            <a href="https://presearch.com">Presearch</a>
+            <a href="#" class="btn btn-primary" onclick="showLogin()">Sign In</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Create, Edit, and Collaborate on Documents <span>Online</span></h1>
+            <p>PreOffice Online brings the full power of PreOffice to your browser. Create documents, spreadsheets, and presentations - all stored securely in PreDrive.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary" onclick="createNew('document')">New Document</a>
+                <a href="https://predrive.eu" class="btn btn-secondary">Open from PreDrive</a>
+            </div>
+        </section>
+
+        <section class="apps-section">
+            <h2>Choose Your Application</h2>
+            <div class="apps-grid">
+                <div class="app-card" onclick="createNew('document')">
+                    <div class="app-icon writer">📝</div>
+                    <h3>PreWriter</h3>
+                    <p>Word processing for reports, letters, and documents</p>
+                </div>
+                <div class="app-card" onclick="createNew('spreadsheet')">
+                    <div class="app-icon calc">📊</div>
+                    <h3>PreCalc</h3>
+                    <p>Spreadsheets for data analysis and calculations</p>
+                </div>
+                <div class="app-card" onclick="createNew('presentation')">
+                    <div class="app-icon impress">📽️</div>
+                    <h3>PreImpress</h3>
+                    <p>Presentations that make an impact</p>
+                </div>
+                <div class="app-card" onclick="createNew('drawing')">
+                    <div class="app-icon draw">🎨</div>
+                    <h3>PreDraw</h3>
+                    <p>Diagrams, flowcharts, and illustrations</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2>Why PreOffice Online?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Your documents stay yours. End-to-end encryption with PreDrive.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Work Anywhere</h3>
+                    <p>Access your documents from any device with a browser.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Real-time Collaboration</h3>
+                    <p>Edit documents together with your team in real-time.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📁</div>
+                    <h3>ODF Compatible</h3>
+                    <p>Full support for open document formats and MS Office files.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div>
+            <strong>PreOffice Online</strong> - Part of the <a href="https://presearch.com">Presearch</a> ecosystem
+        </div>
+        <p>Powered by LibreOffice Technology</p>
+    </footer>
+
+    <!-- Create Document Modal -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <h2>Create New Document</h2>
+            <input type="text" id="docName" placeholder="Document name">
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitCreate()">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDocType = 'document';
+
+        function createNew(type) {
+            currentDocType = type;
+            const extensions = {
+                document: '.odt',
+                spreadsheet: '.ods',
+                presentation: '.odp',
+                drawing: '.odg'
+            };
+            document.getElementById('docName').value = 'Untitled' + extensions[type];
+            document.getElementById('createModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('createModal').classList.remove('active');
+        }
+
+        function showLogin() {
+            window.location.href = 'https://predrive.eu/login?redirect=' + encodeURIComponent(window.location.href);
+        }
+
+        async function submitCreate() {
+            const name = document.getElementById('docName').value;
+            if (!name) return;
+
+            try {
+                const response = await fetch('/api/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: currentDocType,
+                        name: name,
+                        folder: '/'
+                    })
+                });
+
+                const data = await response.json();
+                if (data.editorUrl) {
+                    window.location.href = data.editorUrl;
+                }
+            } catch (err) {
+                alert('Please sign in to create documents');
+                showLogin();
+            }
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Close modal on background click
+        document.getElementById('createModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) closeModal();
+        });
+    </script>
+</body>
+</html>

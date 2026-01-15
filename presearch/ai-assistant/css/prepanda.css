@@ -1,0 +1,562 @@
+/**
+ * PrePanda AI Assistant Styles
+ * Based on Presearch PreGPT styling
+ * Colors: Presearch Blue #2D8EFF
+ */
+
+:root {
+  /* Presearch Brand Colors */
+  --presearch-blue: #2D8EFF;
+  --presearch-blue-dark: #1A7AE8;
+  --presearch-blue-light: #5BA3FF;
+  --presearch-blue-bg: #EAF3FF;
+
+  /* Light Mode */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F4F4F4;
+  --bg-tertiary: #FAFAFA;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --border-color: #E0E0E0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Dark Mode Variables */
+  --dark-bg-primary: #1E1E1E;
+  --dark-bg-secondary: #252525;
+  --dark-bg-tertiary: #2E2E2E;
+  --dark-text-primary: #E0E0E0;
+  --dark-text-secondary: #A0A0A0;
+  --dark-border-color: #3D3D3D;
+}
+
+/* Dark mode class */
+.prepanda-dark {
+  --bg-primary: var(--dark-bg-primary);
+  --bg-secondary: var(--dark-bg-secondary);
+  --bg-tertiary: var(--dark-bg-tertiary);
+  --text-primary: var(--dark-text-primary);
+  --text-secondary: var(--dark-text-secondary);
+  --border-color: var(--dark-border-color);
+}
+
+/* Main Container */
+.prepanda-container {
+  font-family: 'Raleway', 'Open Sans', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 600px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  overflow: hidden;
+  border: 1px solid var(--presearch-blue);
+}
+
+/* Header */
+.prepanda-header {
+  background: var(--presearch-blue);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.prepanda-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prepanda-header-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.prepanda-header-subtitle {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.prepanda-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prepanda-header-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.prepanda-header-btn:hover {
+  opacity: 1;
+}
+
+.prepanda-header-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Messages Container */
+.prepanda-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-secondary);
+}
+
+/* Custom Scrollbar */
+.prepanda-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.prepanda-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prepanda-messages::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+.prepanda-messages::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* Message Bubbles */
+.prepanda-message {
+  display: flex;
+  gap: 8px;
+  max-width: 90%;
+}
+
+.prepanda-message-user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.prepanda-message-assistant {
+  align-self: flex-start;
+}
+
+.prepanda-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.prepanda-avatar-assistant {
+  background: var(--presearch-blue-bg);
+}
+
+.prepanda-avatar-user {
+  background: var(--presearch-blue);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.prepanda-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.prepanda-bubble-user {
+  background: var(--presearch-blue);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.prepanda-bubble-assistant {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+/* Markdown Styling in Messages */
+.prepanda-bubble-assistant strong {
+  font-weight: 600;
+}
+
+.prepanda-bubble-assistant em {
+  font-style: italic;
+}
+
+.prepanda-bubble-assistant code {
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+}
+
+.prepanda-bubble-assistant ul,
+.prepanda-bubble-assistant ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.prepanda-bubble-assistant li {
+  margin: 4px 0;
+}
+
+/* Loading Animation */
+.prepanda-loading {
+  display: flex;
+  gap: 4px;
+  padding: 8px 14px;
+}
+
+.prepanda-loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--presearch-blue);
+  animation: prepanda-bounce 1.4s infinite ease-in-out both;
+}
+
+.prepanda-loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.prepanda-loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes prepanda-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Input Area */
+.prepanda-input-area {
+  padding: 12px 16px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.prepanda-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-radius: 24px;
+  padding: 4px 8px;
+  gap: 8px;
+}
+
+.prepanda-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.prepanda-input::placeholder {
+  color: var(--text-muted);
+}
+
+.prepanda-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--presearch-blue);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.prepanda-send-btn:hover {
+  background: var(--presearch-blue-dark);
+}
+
+.prepanda-send-btn:active {
+  transform: scale(0.95);
+}
+
+.prepanda-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prepanda-send-btn svg {
+  width: 18px;
+  height: 18px;
+  color: white;
+}
+
+/* Context Info */
+.prepanda-context {
+  padding: 8px 16px;
+  background: var(--presearch-blue-bg);
+  border-top: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.prepanda-context-label {
+  font-weight: 600;
+  color: var(--presearch-blue);
+}
+
+/* Suggestions */
+.prepanda-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.prepanda-suggestion-chip {
+  padding: 6px 12px;
+  background: var(--presearch-blue-bg);
+  color: var(--presearch-blue);
+  border: none;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.prepanda-suggestion-chip:hover {
+  background: var(--presearch-blue);
+  color: white;
+}
+
+/* Settings Panel */
+.prepanda-settings {
+  padding: 16px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+}
+
+.prepanda-settings-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.prepanda-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.prepanda-settings-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Toggle Switch */
+.prepanda-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+}
+
+.prepanda-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.prepanda-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.prepanda-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.prepanda-toggle input:checked + .prepanda-toggle-slider {
+  background-color: var(--presearch-blue);
+}
+
+.prepanda-toggle input:checked + .prepanda-toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* Select Dropdown */
+.prepanda-select {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Welcome Message */
+.prepanda-welcome {
+  text-align: center;
+  padding: 32px 24px;
+  color: var(--text-secondary);
+}
+
+.prepanda-welcome-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.prepanda-welcome-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--presearch-blue);
+  margin-bottom: 8px;
+}
+
+.prepanda-welcome-text {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Document Context Badge */
+.prepanda-doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--presearch-blue-bg);
+  color: var(--presearch-blue);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.prepanda-doc-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Quick Actions */
+.prepanda-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px 16px;
+}
+
+.prepanda-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.prepanda-action-btn:hover {
+  background: var(--presearch-blue-bg);
+  border-color: var(--presearch-blue);
+  color: var(--presearch-blue);
+}
+
+.prepanda-action-btn svg {
+  width: 16px;
+  height: 16px;
+  color: var(--presearch-blue);
+}
+
+/* Animations */
+@keyframes prepanda-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prepanda-message {
+  animation: prepanda-slide-in 0.3s ease-out;
+}
+
+/* Focus States */
+.prepanda-input:focus {
+  outline: none;
+}
+
+.prepanda-send-btn:focus,
+.prepanda-header-btn:focus,
+.prepanda-suggestion-chip:focus,
+.prepanda-action-btn:focus {
+  outline: 2px solid var(--presearch-blue-light);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .prepanda-container {
+    max-width: 100%;
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- PreOffice Calc Icon for Start Center -->
+
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#2D8EFF"/>
+
+  <!-- Spreadsheet grid -->
+  <rect x="14" y="14" width="36" height="36" rx="2" fill="#FFFFFF"/>
+
+  <!-- Grid lines -->
+  <line x1="14" y1="26" x2="50" y2="26" stroke="#2D8EFF" stroke-width="1.5"/>
+  <line x1="14" y1="38" x2="50" y2="38" stroke="#2D8EFF" stroke-width="1.5"/>
+  <line x1="26" y1="14" x2="26" y2="50" stroke="#2D8EFF" stroke-width="1.5"/>
+  <line x1="38" y1="14" x2="38" y2="50" stroke="#2D8EFF" stroke-width="1.5"/>
+
+  <!-- Header row highlight -->
+  <rect x="14" y="14" width="36" height="12" fill="#EAF3FF"/>
+</svg>

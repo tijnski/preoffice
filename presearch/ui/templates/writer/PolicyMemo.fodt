@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+                 xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+                 xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+                 xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+                 office:version="1.3"
+                 office:mimetype="application/vnd.oasis.opendocument.text">
+
+  <office:meta>
+    <meta:generator>PreOffice/1.0</meta:generator>
+    <dc:title>Policy Memo</dc:title>
+    <dc:description>PreOffice template for internal policy memorandums</dc:description>
+  </office:meta>
+
+  <office:styles>
+    <style:style style:name="Memo_Header" style:family="paragraph">
+      <style:paragraph-properties fo:margin-bottom="0.3cm" fo:border-bottom="2pt solid #2D8EFF"
+                                  fo:padding-bottom="0.3cm"/>
+      <style:text-properties fo:font-size="11pt" fo:font-weight="bold"/>
+    </style:style>
+
+    <style:style style:name="Memo_Field" style:family="paragraph">
+      <style:paragraph-properties fo:margin-bottom="0.2cm"/>
+      <style:text-properties fo:font-size="11pt"/>
+    </style:style>
+
+    <style:style style:name="Memo_Body" style:family="paragraph">
+      <style:paragraph-properties fo:margin-top="0.5cm" fo:line-height="150%"/>
+      <style:text-properties fo:font-size="11pt"/>
+    </style:style>
+
+    <style:style style:name="Memo_Subject" style:family="paragraph">
+      <style:paragraph-properties fo:margin-top="0.5cm" fo:margin-bottom="0.5cm"/>
+      <style:text-properties fo:font-size="14pt" fo:font-weight="bold" fo:color="#2D8EFF"/>
+    </style:style>
+  </office:styles>
+
+  <office:body>
+    <office:text>
+      <text:p text:style-name="Memo_Header">MEMORANDUM</text:p>
+
+      <text:p text:style-name="Memo_Field"><text:span text:style-name="Strong">TO:</text:span> [Recipient Name/Department]</text:p>
+      <text:p text:style-name="Memo_Field"><text:span text:style-name="Strong">FROM:</text:span> [Your Name/Department]</text:p>
+      <text:p text:style-name="Memo_Field"><text:span text:style-name="Strong">DATE:</text:span> [Date]</text:p>
+      <text:p text:style-name="Memo_Field"><text:span text:style-name="Strong">CC:</text:span> [Additional Recipients]</text:p>
+
+      <text:p text:style-name="Memo_Subject">RE: [Subject Line]</text:p>
+
+      <text:p text:style-name="Memo_Body">[Begin your memo content here. State the purpose of the memo in the first paragraph.]</text:p>
+
+      <text:p text:style-name="Memo_Body">[Provide background information and context in this section.]</text:p>
+
+      <text:p text:style-name="Memo_Body">[Include your analysis, recommendations, or required actions.]</text:p>
+
+      <text:p text:style-name="Memo_Body">[Conclude with next steps or a call to action.]</text:p>
+    </office:text>
+  </office:body>
+</office:document>

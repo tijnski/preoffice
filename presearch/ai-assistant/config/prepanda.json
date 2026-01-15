@@ -1,0 +1,82 @@
+{
+  "name": "PrePanda AI Assistant",
+  "version": "1.0.0",
+  "description": "AI Writing Assistant for PreOffice powered by Venice.ai",
+
+  "api": {
+    "url": "https://api.venice.ai/api/v1",
+    "models": {
+      "smart_result": "llama-3.2-3b",
+      "ask_fast": "llama-3.2-3b",
+      "ask_balanced": "llama-3.3-70b",
+      "ask_best": "llama-3.3-70b"
+    },
+    "defaults": {
+      "temperature": 0.7,
+      "max_tokens": 500,
+      "max_tokens_ask": 1000
+    }
+  },
+
+  "prompts": {
+    "system": "You are PrePanda, an AI writing assistant for PreOffice (part of the Presearch Pre-suite). You help users with document writing, editing, summarizing, and improving their text. Be helpful, concise, and professional. Use markdown formatting when appropriate.",
+
+    "summarize": "Please provide a concise summary of the following text, highlighting the key points:",
+    "improve": "Please improve the following text, making it clearer, more professional, and better structured:",
+    "translate": "Please translate the following text to {language}:",
+    "explain": "Please explain the following text in simple, easy-to-understand terms:",
+    "proofread": "Please proofread and correct any grammar, spelling, or punctuation errors in the following text:",
+    "expand": "Please expand on the following text with more details and examples:",
+    "simplify": "Please simplify the following text to make it easier to understand:",
+    "formalize": "Please rewrite the following text in a more formal, professional tone:",
+    "casualize": "Please rewrite the following text in a more casual, friendly tone:"
+  },
+
+  "ui": {
+    "branding": {
+      "name": "PrePanda",
+      "icon": "🐼",
+      "tagline": "AI Writing Assistant"
+    },
+    "colors": {
+      "primary": "#2D8EFF",
+      "primary_dark": "#1A7AE8",
+      "primary_light": "#5BA3FF",
+      "background": "#FFFFFF",
+      "text": "#333333"
+    },
+    "quick_actions": [
+      {"id": "summarize", "label": "Summarize", "icon": "document"},
+      {"id": "improve", "label": "Improve", "icon": "edit"},
+      {"id": "translate", "label": "Translate", "icon": "translate"},
+      {"id": "explain", "label": "Explain", "icon": "question"},
+      {"id": "proofread", "label": "Proofread", "icon": "check"},
+      {"id": "expand", "label": "Expand", "icon": "expand"}
+    ]
+  },
+
+  "settings": {
+    "response_style": {
+      "options": ["concise", "detailed", "creative"],
+      "default": "concise"
+    },
+    "language": {
+      "options": ["English", "Dutch", "German", "French", "Spanish", "Chinese", "Japanese"],
+      "default": "English"
+    },
+    "dark_mode": {
+      "default": false,
+      "follow_system": true
+    },
+    "privacy_mode": {
+      "default": true,
+      "description": "Don't store conversation history"
+    }
+  },
+
+  "limits": {
+    "max_context_length": 8000,
+    "max_message_length": 2000,
+    "max_history_messages": 10
+  }
+}

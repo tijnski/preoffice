@@ -1,0 +1,270 @@
+Presearch brand tokens (from your sheets)
+Core
+PRE_BLUE #2D8EFF
+TEXT_PRIMARY #000000
+TEXT_SECONDARY #494949
+BG_TINT #EAF3FF
+BG_SOFT #FAFBFC
+WHITE #FFFFFF
+Blue scale (dark)
+#287FE5 #2471CC #1F63B2 #1B5599 #16477F #123866 #0D2A4C #091C33 #040E19 #000000
+Blue scale (light)
+#2D8EFF #4299FF #56A4FF #6CAFFF #81BBFF #96C6FF #ABD1FF #C0DDFF #D5E8FF #EAF3FF #FFFFFF
+Typeface: Proxima Nova (in practice: use templates that prefer it, but include fallbacks like Inter, Noto Sans, Arial because you can’t assume it’s installed everywhere).
+Repo layout (recommendation)
+presearch-office/
+  brand/
+    tokens.json
+    tokens.css
+    tokens.scss
+    README.md
+    assets/
+      logos/ (svg/png)
+      splash/ (png)
+      startcenter/ (png/svg)
+  icon-theme/
+    src-svg/
+    build/
+    dist/
+    README.md
+    tools/
+  extension/
+    src/
+      python/
+      config/
+      templates/
+    dist/
+    README.md
+  installer/
+    windows/
+    macos/
+    linux/
+    README.md
+  .github/workflows/
+  CLAUDE.md
+CLAUDE.md (paste this at repo root)
+You are working on “Presearch Office Edition”, a no-fork skin + extension layer on top of LibreOffice.
+
+Non-negotiables:
+- Do NOT fork LibreOffice unless explicitly instructed.
+- Prefer: icon theme + configuration defaults + extension (.oxt) + installer wrapper.
+- Always follow LibreOffice’s existing icon-theme structure and naming.
+- Produce deterministic builds (same inputs -> same outputs).
+- Keep licensing and attribution intact.
+
+Brand:
+- Primary #2D8EFF
+- Text #000000 / #494949
+- Backgrounds #EAF3FF / #FAFBFC / #FFFFFF
+- Tone: Community, Transparency, Privacy
+
+Deliverables:
+1) Icon theme: presearch theme that can fallback to an existing LO theme for missing icons.
+2) Branding assets: tokens + logo variants + splash + startcenter visuals.
+3) Extension pack (.oxt): “Search with Presearch”, “Ask PreGPT”, “Export to PreStorage (stub ok)”, “Privacy check”.
+4) Build/packaging automation + CI: produces artifacts for each module and a release bundle.
+
+When unsure about LibreOffice file paths or formats:
+- Inspect an existing LibreOffice install OR check LibreOffice source tree in-place.
+- Mirror existing conventions exactly.
+- Add a short note in README explaining the chosen approach.
+1) Icon theme bouwen (SVG → LO icon theme)
+Goal
+Create an LO icon theme named “presearch” that:
+uses your blue + clean flat look
+keeps naming identical to LibreOffice’s icon IDs
+supports dark/light variants if LO supports it in your target version
+falls back to a base theme (so you don’t need to redraw 10k icons on day 1)
+Strategy (high leverage)
+Pick a base theme to inherit from (recommended: Colibre because it’s the default and complete).
+Create a minimal override set first (filetype icons, app icons, top toolbar essentials).
+Add a fallback mechanism:
+If LO theme format supports links.txt (common in LO themes), use it to point missing icons to Colibre.
+If it’s a zipped images_*.zip style, build your zip with only overrides + a documented fallback plan (or bundle full set later).
+Acceptance criteria
+User can select “Presearch” in LibreOffice icon theme settings.
+Core icons are visibly Presearch-styled:
+Writer/Calc/Impress icons
+New/Open/Save/Export/Undo/Redo/Search
+Build script outputs a single distributable (zip or LO theme structure) + a README with install steps.
+Claude Code prompt (copy/paste)
+Task: Create a LibreOffice icon theme named "presearch" with fallback to an existing theme.
+
+Steps:
+1) Detect LibreOffice icon theme structure by inspecting either:
+   a) LibreOffice install directories (share/config/images_*.zip), OR
+   b) LibreOffice source tree icon-themes/*.
+2) Choose "colibre" as fallback base.
+3) Create icon-theme/presearch/ (or images_presearch.zip) matching LO conventions exactly.
+4) Implement fallback (links.txt or equivalent). Only override a minimal set of icons for MVP.
+5) Add build script:
+   - Inputs: icon-theme/src-svg/*.svg
+   - Outputs: icon-theme/dist/(theme artifact)
+   - Include linting/optimization: svgo + png optimization if PNGs are produced.
+6) Document install steps per OS in icon-theme/README.md.
+
+MVP override list:
+- app icons: writer/calc/impress/startcenter
+- cmd icons: new, open, save, exportpdf, undo, redo, search
+- filetype icons: odt/ods/odp/pdf
+Use Presearch tokens (#2D8EFF primary, neutrals #000/#494949, bg #EAF3FF).
+Build tooling suggestions (Claude should implement)
+SVG cleanup: svgo
+Rasterize if needed: resvg (fast, consistent)
+PNG optimize: oxipng
+2) CSS/branding assets maken (tokens + visuals)
+LibreOffice itself isn’t “CSS-themed” like a web app, but you still want a single source of truth for colors and brand assets that every module consumes (icons, extension UI, installer, docs).
+Deliverables
+brand/tokens.json (canonical)
+generated:
+brand/tokens.css (for docs/web/extension html)
+brand/tokens.scss (if you style a web panel later)
+brand/assets/:
+logo variants (full, mark, monochrome, reversed)
+splash images (light/dark)
+startcenter visuals (banner / tile imagery)
+Acceptance criteria
+One edit in tokens.json updates all derived formats.
+Assets include light + dark + high-contrast variants.
+Claude Code prompt
+Task: Build the Presearch brand kit + token pipeline.
+
+1) Create brand/tokens.json with:
+   - primary, text, background, blue scales
+   - semantic tokens (accent, border, hover, focus, disabled)
+2) Generate brand/tokens.css and brand/tokens.scss from tokens.json.
+3) Create brand/assets:
+   - logos: svg + png exports (1x/2x)
+   - splash: sizes suitable for desktop splash screens (document chosen sizes)
+   - startcenter: header/banner + tile images in Presearch style
+4) Automatically generate:
+   - light, dark, high-contrast variants (adjust text/background for contrast)
+5) Write brand/README.md describing usage, export commands, and do/don’t rules.
+
+Important:
+- Keep #2D8EFF exact for primary.
+- Use #494949 for secondary text, avoid pure black for body text unless needed.
+- Backgrounds: #EAF3FF and #FAFBFC for soft surfaces.
+3) Extensions (UNO / Python) pack
+MVP features (practical first)
+Search with Presearch
+Takes selected text (or prompts if none)
+Opens default browser: https://presearch.com/search?q=<encoded>
+Ask PreGPT
+Same selection flow
+Opens PreGPT URL (or a configurable endpoint)
+Privacy check
+Scans document for:
+author / edit metadata
+tracked changes (redlines)
+comments
+hidden text
+embedded links
+Outputs a simple report dialog + “Clean metadata” action (where feasible)
+Export to PreStorage (stub OK)
+Exports to PDF to a chosen folder
+Optional: upload step behind a config flag (placeholder endpoint)
+Big architectural choice (keep it simple)
+Start with a Python-based .oxt:
+menu/toolbar items
+dialogs
+minimal config storage
+Sidebar panel is doable, but it’s a step up in complexity. MVP can be dialogs and a toolbar.
+Acceptance criteria
+.oxt installs cleanly
+Toolbar/menu entries show up
+Actions work on Writer/Calc/Impress
+Privacy report is deterministic and doesn’t crash on empty docs
+Claude Code prompt
+Task: Create a LibreOffice extension (.oxt) named "Presearch Tools".
+
+Requirements:
+- Implement 4 commands:
+  1) SearchWithPresearch: uses selection or prompts user, opens browser to presearch search.
+  2) AskPreGPT: uses selection or prompts user, opens browser to PreGPT endpoint (configurable).
+  3) PrivacyCheck: scans metadata + tracked changes + comments + hidden text; shows report dialog.
+  4) ExportToPreStorage: exports to PDF into a selected folder; include stubbed upload hook.
+
+Implementation notes:
+- Prefer Python UNO for MVP.
+- Add configuration file for endpoints and defaults.
+- Provide a clean folder structure in extension/src and a build script that outputs extension/dist/presearch-tools.oxt.
+- Add versioning (semver) and changelog generation.
+
+Also:
+- Include templates in extension/src/templates (Writer/Calc/Impress) using Presearch tokens and preferred font stack.
+What the extension should include by default
+Templates:
+“Presearch Report” (clean header, blue accents)
+“Presearch Pitch Deck” (Impress)
+“Presearch Spreadsheet” (Calc)
+4) Build/packaging automation (installer wrapper + CI)
+The “no fork” installer concept
+You ship an installer that:
+installs LibreOffice (official package, silently if allowed)
+installs your .oxt
+installs your icon theme artifact
+applies defaults (optional):
+set icon theme to “Presearch”
+enable Notebookbar (optional)
+import templates
+Acceptance criteria
+One command produces a “release bundle”:
+icon theme artifact
+branding pack
+extension .oxt
+installers (or per-OS scripts)
+checksums + release notes
+Claude Code prompt
+Task: Create build + packaging automation for Presearch Office Edition.
+
+1) Add CI workflow to build:
+   - icon theme artifact
+   - brand token outputs + assets
+   - extension .oxt
+2) Add release automation:
+   - generate changelog from commits or a CHANGELOG.md fragment system
+   - attach artifacts to a GitHub Release (or create a /dist bundle)
+3) Create installer wrappers:
+   - Windows: a script or installer project that can:
+       a) download official LibreOffice installer (pinned version),
+       b) run silent install,
+       c) install .oxt and icon theme and templates.
+   - macOS: script to mount dmg/copy app + install extension and assets into user profile.
+   - Linux: script for deb/rpm based systems + fallback to flatpak/snap instructions.
+
+Constraints:
+- No hardcoding paths without detection.
+- Each OS installer must be idempotent (running twice doesn't break).
+- Document everything in installer/README.md.
+CI pipeline suggestion (GitHub Actions)
+lint:
+Python: ruff, mypy (optional)
+JS tooling for svgo if used
+build:
+icon theme build
+token generation
+extension package
+release:
+changelog + tag
+attach artifacts
+“Copy-paste” starter: brand/tokens.json (use as canonical)
+{
+  "color": {
+    "primary": "#2D8EFF",
+    "text": { "primary": "#000000", "secondary": "#494949" },
+    "bg": { "tint": "#EAF3FF", "soft": "#FAFBFC", "base": "#FFFFFF" },
+    "blueScaleDark": ["#287FE5","#2471CC","#1F63B2","#1B5599","#16477F","#123866","#0D2A4C","#091C33","#040E19","#000000"],
+    "blueScaleLight": ["#2D8EFF","#4299FF","#56A4FF","#6CAFFF","#81BBFF","#96C6FF","#ABD1FF","#C0DDFF","#D5E8FF","#EAF3FF","#FFFFFF"]
+  },
+  "typography": {
+    "preferred": "Proxima Nova",
+    "fallback": ["Inter","Noto Sans","Arial","sans-serif"]
+  },
+  "voice": ["Community","Transparency","Privacy"]
+}
+Practical order of execution (so you ship fast)
+Brand tokens + asset kit (everything depends on this)
+Icon theme MVP overrides (small set, big visual effect)
+Extension MVP (Search + Privacy check first)
+Installer wrapper + CI (make it shippable)

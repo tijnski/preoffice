@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Color Scheme - Presearch Theme
+  Primary: #2D8EFF (2985727 decimal)
+  Background Tint: #EAF3FF (15397887 decimal)
+-->
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="ExtendedColorScheme"
+                    oor:package="org.openoffice.Office">
+  <node oor:name="ExtendedColorScheme">
+    <prop oor:name="CurrentColorScheme">
+      <value>Presearch</value>
+    </prop>
+    <node oor:name="ColorSchemes">
+      <node oor:name="Presearch" oor:op="replace">
+        <!-- PreOffice branded colors -->
+      </node>
+    </node>
+  </node>
+</oor:component-data>

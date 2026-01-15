@@ -1,0 +1,66 @@
+# PreOffice Build Configuration
+# This file configures the LibreOffice build for PreOffice branding
+#
+# Usage: Place in core/ directory, then run ./autogen.sh
+#
+
+# Product Branding
+--with-vendor="Presearch"
+--with-product-name="PreOffice"
+--with-package-version="1.0.0"
+
+# Build Type (release for production)
+--enable-release-build
+
+# Disable telemetry and crash reporting
+--disable-online-update
+--disable-crashdump
+--disable-fetch-external
+
+# Privacy-friendly defaults
+--without-helppack-integration
+--disable-extension-integration
+
+# Enable all main components
+--enable-calc
+--enable-writer
+--enable-impress
+--enable-draw
+--enable-base
+--enable-math
+
+# Use system libraries where available (faster build)
+--with-system-curl
+--with-system-openssl
+--with-system-icu
+--with-system-jpeg
+--with-system-libpng
+--with-system-zlib
+
+# Enable Python for macros and extensions
+--enable-python=system
+--enable-scripting-beanshell
+--enable-scripting-javascript
+
+# UI Options
+--enable-gtk3
+--enable-qt5
+--enable-release-build
+
+# Icon theme
+--with-icon-themes="colibre presearch"
+
+# Parallelization (adjust based on your CPU)
+--with-parallelism=8
+
+# macOS specific (uncomment on macOS)
+# --enable-macosx-sandbox
+# --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+
+# Windows specific (uncomment on Windows)
+# --enable-64-bit
+# --with-visual-studio=2022
+
+# Linux specific (uncomment on Linux)
+# --enable-gio
+# --enable-dbus

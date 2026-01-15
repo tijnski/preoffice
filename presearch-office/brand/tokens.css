@@ -1,0 +1,89 @@
+/* Presearch Office Brand Tokens - Auto-generated from tokens.json */
+/* Do not edit directly - modify tokens.json and regenerate */
+
+:root {
+  /* Primary Colors */
+  --pre-primary: #2D8EFF;
+
+  /* Text Colors */
+  --pre-text-primary: #000000;
+  --pre-text-secondary: #494949;
+
+  /* Background Colors */
+  --pre-bg-tint: #EAF3FF;
+  --pre-bg-soft: #FAFBFC;
+  --pre-bg-base: #FFFFFF;
+
+  /* Blue Scale - Dark */
+  --pre-blue-dark-1: #287FE5;
+  --pre-blue-dark-2: #2471CC;
+  --pre-blue-dark-3: #1F63B2;
+  --pre-blue-dark-4: #1B5599;
+  --pre-blue-dark-5: #16477F;
+  --pre-blue-dark-6: #123866;
+  --pre-blue-dark-7: #0D2A4C;
+  --pre-blue-dark-8: #091C33;
+  --pre-blue-dark-9: #040E19;
+  --pre-blue-dark-10: #000000;
+
+  /* Blue Scale - Light */
+  --pre-blue-light-1: #2D8EFF;
+  --pre-blue-light-2: #4299FF;
+  --pre-blue-light-3: #56A4FF;
+  --pre-blue-light-4: #6CAFFF;
+  --pre-blue-light-5: #81BBFF;
+  --pre-blue-light-6: #96C6FF;
+  --pre-blue-light-7: #ABD1FF;
+  --pre-blue-light-8: #C0DDFF;
+  --pre-blue-light-9: #D5E8FF;
+  --pre-blue-light-10: #EAF3FF;
+  --pre-blue-light-11: #FFFFFF;
+
+  /* Semantic Colors */
+  --pre-accent: #2D8EFF;
+  --pre-accent-hover: #287FE5;
+  --pre-accent-active: #2471CC;
+  --pre-border: #D5E8FF;
+  --pre-border-strong: #81BBFF;
+  --pre-focus: #56A4FF;
+  --pre-disabled: #C0DDFF;
+  --pre-error: #DC3545;
+  --pre-warning: #FFC107;
+  --pre-success: #28A745;
+
+  /* Typography */
+  --pre-font-preferred: "Proxima Nova";
+  --pre-font-stack: "Proxima Nova", "Inter", "Noto Sans", "Arial", sans-serif;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pre-primary: #4299FF;
+    --pre-text-primary: #FFFFFF;
+    --pre-text-secondary: #C0DDFF;
+    --pre-bg-tint: #0D2A4C;
+    --pre-bg-soft: #091C33;
+    --pre-bg-base: #040E19;
+  }
+}
+
+/* Dark Mode Class Override */
+.presearch-dark {
+  --pre-primary: #4299FF;
+  --pre-text-primary: #FFFFFF;
+  --pre-text-secondary: #C0DDFF;
+  --pre-bg-tint: #0D2A4C;
+  --pre-bg-soft: #091C33;
+  --pre-bg-base: #040E19;
+}
+
+/* High Contrast Mode */
+.presearch-high-contrast {
+  --pre-primary: #2D8EFF;
+  --pre-text-primary: #000000;
+  --pre-text-secondary: #000000;
+  --pre-bg-tint: #FFFFFF;
+  --pre-bg-soft: #FFFFFF;
+  --pre-bg-base: #FFFFFF;
+}

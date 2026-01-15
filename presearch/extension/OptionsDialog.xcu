@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="OptionsDialog"
+                    oor:package="org.openoffice.Office">
+
+  <node oor:name="Nodes">
+    <node oor:name="com.presearch.preoffice" oor:op="replace">
+      <prop oor:name="Id">
+        <value>com.presearch.preoffice</value>
+      </prop>
+      <prop oor:name="Label">
+        <value xml:lang="en">PreOffice</value>
+      </prop>
+      <prop oor:name="AllModules">
+        <value>true</value>
+      </prop>
+      <node oor:name="Leaves">
+        <node oor:name="com.presearch.prepanda.settings" oor:op="replace">
+          <prop oor:name="Id">
+            <value>com.presearch.prepanda.settings</value>
+          </prop>
+          <prop oor:name="Label">
+            <value xml:lang="en">PrePanda AI</value>
+          </prop>
+          <prop oor:name="OptionsPage">
+            <value>%origin%/dialogs/prepanda_options.xdl</value>
+          </prop>
+          <prop oor:name="EventHandlerService">
+            <value>com.presearch.prepanda.OptionsHandler</value>
+          </prop>
+        </node>
+        <node oor:name="com.presearch.predrive.settings" oor:op="replace">
+          <prop oor:name="Id">
+            <value>com.presearch.predrive.settings</value>
+          </prop>
+          <prop oor:name="Label">
+            <value xml:lang="en">PreDrive Cloud</value>
+          </prop>
+          <prop oor:name="OptionsPage">
+            <value>%origin%/dialogs/predrive_options.xdl</value>
+          </prop>
+          <prop oor:name="EventHandlerService">
+            <value>com.presearch.predrive.OptionsHandler</value>
+          </prop>
+        </node>
+      </node>
+    </node>
+  </node>
+
+</oor:component-data>

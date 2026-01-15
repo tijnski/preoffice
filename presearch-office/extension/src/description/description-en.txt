@@ -1,0 +1,12 @@
+Presearch Tools for LibreOffice
+
+A privacy-focused productivity extension that integrates Presearch services directly into LibreOffice.
+
+Features:
+- Search with Presearch: Search selected text using Presearch's private search engine
+- Ask PreGPT: Get AI-powered answers about your selected text
+- Privacy Check: Scan documents for sensitive metadata, comments, and tracked changes
+- Export to PreStorage: Export documents to PDF with optional cloud storage
+
+Version 1.0.0
+https://presearch.com

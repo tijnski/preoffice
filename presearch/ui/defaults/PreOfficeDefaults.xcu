@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Default Settings
+  - Notebookbar enabled by default
+  - ODF 1.3 as default format
+  - Privacy-friendly settings
+  - Modern UI options
+-->
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Common"
+                    oor:package="org.openoffice.Office">
+
+  <!-- UI Settings -->
+  <node oor:name="Misc">
+    <!-- Use Notebookbar (Tabbed UI) by default -->
+    <prop oor:name="Symbolset" oor:type="xs:short">
+      <value>0</value>
+    </prop>
+  </node>
+
+  <!-- Save Settings -->
+  <node oor:name="Save">
+    <node oor:name="Document">
+      <!-- Auto-save every 10 minutes -->
+      <prop oor:name="AutoSave">
+        <value>true</value>
+      </prop>
+      <prop oor:name="AutoSaveTimeIntervall">
+        <value>10</value>
+      </prop>
+      <!-- Create backup -->
+      <prop oor:name="CreateBackup">
+        <value>true</value>
+      </prop>
+    </node>
+    <node oor:name="ODF">
+      <!-- Use ODF 1.3 Extended -->
+      <prop oor:name="DefaultVersion">
+        <value>4</value>
+      </prop>
+    </node>
+  </node>
+
+  <!-- Privacy Settings -->
+  <node oor:name="Security">
+    <node oor:name="Scripting">
+      <!-- Macros disabled by default for security -->
+      <prop oor:name="MacroSecurityLevel">
+        <value>2</value>
+      </prop>
+    </node>
+  </node>
+
+  <!-- Help Settings -->
+  <node oor:name="Help">
+    <!-- Disable tip of the day -->
+    <prop oor:name="ShowTipOfTheDay">
+      <value>false</value>
+    </prop>
+  </node>
+
+</oor:component-data>

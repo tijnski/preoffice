@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+                 xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+                 xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+                 xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+                 xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
+                 xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+                 xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+                 office:version="1.3"
+                 office:mimetype="application/vnd.oasis.opendocument.presentation">
+
+  <office:meta>
+    <meta:generator>PreOffice/1.0</meta:generator>
+    <dc:title>PreSuite Pitch Deck</dc:title>
+    <dc:description>PreOffice template for professional presentations</dc:description>
+  </office:meta>
+
+  <office:styles>
+    <!-- Presearch Blue: #2D8EFF -->
+
+    <!-- Master Page Background -->
+    <style:style style:name="dp1" style:family="drawing-page">
+      <style:drawing-page-properties draw:fill="solid" draw:fill-color="#FFFFFF"/>
+    </style:style>
+
+    <style:style style:name="dp2" style:family="drawing-page">
+      <style:drawing-page-properties draw:fill="solid" draw:fill-color="#2D8EFF"/>
+    </style:style>
+
+    <!-- Title Text Style -->
+    <style:style style:name="Title_Style" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="left"/>
+      <style:text-properties fo:font-size="44pt" fo:font-weight="bold" fo:color="#2D8EFF"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Title on Blue Background -->
+    <style:style style:name="Title_White" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-size="48pt" fo:font-weight="bold" fo:color="#FFFFFF"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Subtitle Style -->
+    <style:style style:name="Subtitle_Style" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="left"/>
+      <style:text-properties fo:font-size="24pt" fo:color="#494949"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Subtitle White -->
+    <style:style style:name="Subtitle_White" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-size="28pt" fo:color="#E0E0E0"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Body Text Style -->
+    <style:style style:name="Body_Style" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="left"/>
+      <style:text-properties fo:font-size="20pt" fo:color="#333333"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Bullet Point Style -->
+    <style:style style:name="Bullet_Style" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="left" fo:margin-left="1cm"/>
+      <style:text-properties fo:font-size="18pt" fo:color="#333333"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Accent Box Style -->
+    <style:style style:name="Accent_Box" style:family="graphic">
+      <style:graphic-properties draw:stroke="none" draw:fill="solid" draw:fill-color="#EAF3FF"
+                                fo:padding="0.5cm"/>
+    </style:style>
+
+    <!-- Number Highlight -->
+    <style:style style:name="Number_Big" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-size="72pt" fo:font-weight="bold" fo:color="#2D8EFF"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+
+    <!-- Footer Style -->
+    <style:style style:name="Footer_Style" style:family="presentation">
+      <style:graphic-properties draw:stroke="none" draw:fill="none"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-size="10pt" fo:color="#999999"
+                             style:font-name="Liberation Sans"/>
+    </style:style>
+  </office:styles>
+
+  <office:automatic-styles>
+    <!-- Page layout -->
+    <style:page-layout style:name="PM1">
+      <style:page-layout-properties fo:page-width="28cm" fo:page-height="15.75cm"
+                                    style:print-orientation="landscape"/>
+    </style:page-layout>
+  </office:automatic-styles>
+
+  <office:master-styles>
+    <style:master-page style:name="Default" style:page-layout-name="PM1"
+                       draw:style-name="dp1"/>
+    <style:master-page style:name="Blue" style:page-layout-name="PM1"
+                       draw:style-name="dp2"/>
+  </office:master-styles>
+
+  <office:body>
+    <office:presentation>
+
+      <!-- Slide 1: Title Slide (Blue Background) -->
+      <draw:page draw:name="Title" draw:style-name="dp2" draw:master-page-name="Blue">
+        <draw:frame draw:style-name="Title_White" svg:x="2cm" svg:y="5cm" svg:width="24cm" svg:height="3cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_White">[Presentation Title]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Subtitle_White" svg:x="2cm" svg:y="8.5cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Subtitle_White">[Your Name] | [Date]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Footer_Style" svg:x="2cm" svg:y="14cm" svg:width="24cm" svg:height="1cm">
+          <draw:text-box>
+            <text:p text:style-name="Footer_Style">Created with PreOffice — Part of the Pre-suite</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 2: Agenda -->
+      <draw:page draw:name="Agenda" draw:style-name="dp1" draw:master-page-name="Default">
+        <draw:frame draw:style-name="Title_Style" svg:x="2cm" svg:y="1cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_Style">Agenda</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Body_Style" svg:x="2cm" svg:y="4cm" svg:width="24cm" svg:height="9cm">
+          <draw:text-box>
+            <text:list>
+              <text:list-item><text:p>Introduction &amp; Overview</text:p></text:list-item>
+              <text:list-item><text:p>Problem Statement</text:p></text:list-item>
+              <text:list-item><text:p>Our Solution</text:p></text:list-item>
+              <text:list-item><text:p>Key Benefits</text:p></text:list-item>
+              <text:list-item><text:p>Implementation Roadmap</text:p></text:list-item>
+              <text:list-item><text:p>Next Steps</text:p></text:list-item>
+            </text:list>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 3: The Challenge -->
+      <draw:page draw:name="Challenge" draw:style-name="dp1" draw:master-page-name="Default">
+        <draw:frame draw:style-name="Title_Style" svg:x="2cm" svg:y="1cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_Style">The Challenge</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Body_Style" svg:x="2cm" svg:y="4cm" svg:width="11cm" svg:height="9cm">
+          <draw:text-box>
+            <text:p>[Describe the problem you're solving]</text:p>
+            <text:p/>
+            <text:list>
+              <text:list-item><text:p>Pain point 1</text:p></text:list-item>
+              <text:list-item><text:p>Pain point 2</text:p></text:list-item>
+              <text:list-item><text:p>Pain point 3</text:p></text:list-item>
+            </text:list>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Accent_Box" svg:x="15cm" svg:y="4cm" svg:width="11cm" svg:height="6cm">
+          <draw:text-box>
+            <text:p text:style-name="Number_Big">85%</text:p>
+            <text:p text:style-name="Body_Style">[Key statistic that illustrates the problem]</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 4: Our Solution -->
+      <draw:page draw:name="Solution" draw:style-name="dp2" draw:master-page-name="Blue">
+        <draw:frame draw:style-name="Title_White" svg:x="2cm" svg:y="1cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_White">Our Solution</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Subtitle_White" svg:x="2cm" svg:y="5cm" svg:width="24cm" svg:height="8cm">
+          <draw:text-box>
+            <text:p>[One sentence describing your solution]</text:p>
+            <text:p/>
+            <text:p>[Key differentiator]</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 5: Key Benefits -->
+      <draw:page draw:name="Benefits" draw:style-name="dp1" draw:master-page-name="Default">
+        <draw:frame draw:style-name="Title_Style" svg:x="2cm" svg:y="1cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_Style">Key Benefits</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <!-- Benefit 1 -->
+        <draw:frame draw:style-name="Accent_Box" svg:x="2cm" svg:y="4cm" svg:width="7cm" svg:height="5cm">
+          <draw:text-box>
+            <text:p text:style-name="Number_Big">1</text:p>
+            <text:p text:style-name="Body_Style">[Benefit Title]</text:p>
+            <text:p>[Brief description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <!-- Benefit 2 -->
+        <draw:frame draw:style-name="Accent_Box" svg:x="10.5cm" svg:y="4cm" svg:width="7cm" svg:height="5cm">
+          <draw:text-box>
+            <text:p text:style-name="Number_Big">2</text:p>
+            <text:p text:style-name="Body_Style">[Benefit Title]</text:p>
+            <text:p>[Brief description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <!-- Benefit 3 -->
+        <draw:frame draw:style-name="Accent_Box" svg:x="19cm" svg:y="4cm" svg:width="7cm" svg:height="5cm">
+          <draw:text-box>
+            <text:p text:style-name="Number_Big">3</text:p>
+            <text:p text:style-name="Body_Style">[Benefit Title]</text:p>
+            <text:p>[Brief description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 6: Timeline/Roadmap -->
+      <draw:page draw:name="Roadmap" draw:style-name="dp1" draw:master-page-name="Default">
+        <draw:frame draw:style-name="Title_Style" svg:x="2cm" svg:y="1cm" svg:width="24cm" svg:height="2cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_Style">Implementation Roadmap</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <!-- Phase boxes -->
+        <draw:frame draw:style-name="Accent_Box" svg:x="2cm" svg:y="5cm" svg:width="5cm" svg:height="4cm">
+          <draw:text-box>
+            <text:p text:style-name="Body_Style">Phase 1</text:p>
+            <text:p>[Description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Accent_Box" svg:x="8cm" svg:y="5cm" svg:width="5cm" svg:height="4cm">
+          <draw:text-box>
+            <text:p text:style-name="Body_Style">Phase 2</text:p>
+            <text:p>[Description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Accent_Box" svg:x="14cm" svg:y="5cm" svg:width="5cm" svg:height="4cm">
+          <draw:text-box>
+            <text:p text:style-name="Body_Style">Phase 3</text:p>
+            <text:p>[Description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Accent_Box" svg:x="20cm" svg:y="5cm" svg:width="5cm" svg:height="4cm">
+          <draw:text-box>
+            <text:p text:style-name="Body_Style">Phase 4</text:p>
+            <text:p>[Description]</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+      <!-- Slide 7: Call to Action -->
+      <draw:page draw:name="CTA" draw:style-name="dp2" draw:master-page-name="Blue">
+        <draw:frame draw:style-name="Title_White" svg:x="2cm" svg:y="4cm" svg:width="24cm" svg:height="3cm">
+          <draw:text-box>
+            <text:p text:style-name="Title_White">Ready to Get Started?</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Subtitle_White" svg:x="2cm" svg:y="8cm" svg:width="24cm" svg:height="3cm">
+          <draw:text-box>
+            <text:p text:style-name="Subtitle_White">[Contact Information]</text:p>
+            <text:p text:style-name="Subtitle_White">[Email] | [Phone]</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:style-name="Footer_Style" svg:x="2cm" svg:y="14cm" svg:width="24cm" svg:height="1cm">
+          <draw:text-box>
+            <text:p style:name="Footer_Style">Created with PreOffice — Part of the Pre-suite</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+
+    </office:presentation>
+  </office:body>
+</office:document>

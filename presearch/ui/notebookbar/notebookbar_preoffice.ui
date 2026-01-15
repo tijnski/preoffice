@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Notebookbar UI Definition
+  GTK Builder format for LibreOffice's Notebookbar (Ribbon)
+
+  Tabs:
+  - File (PreOffice branding)
+  - Home
+  - Insert
+  - Layout
+  - Review (with PrePanda AI)
+  - View
+-->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <requires lib="LibreOffice" version="7.0"/>
+
+  <object class="sfxlo-NotebookbarTabControl" id="ContextContainer">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+
+    <!-- File Tab (PreOffice Menu) -->
+    <child>
+      <object class="GtkBox" id="FileBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkButton" id="FileNew">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:AddDirect</property>
+            <property name="tooltip_text">New Document</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="FileOpen">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Open</property>
+            <property name="tooltip_text">Open</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="FileSave">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Save</property>
+            <property name="tooltip_text">Save</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="FileSaveAs">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:SaveAs</property>
+            <property name="tooltip_text">Save As</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="FilePrint">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Print</property>
+            <property name="tooltip_text">Print</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="FileExportPDF">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:ExportToPDF</property>
+            <property name="tooltip_text">Export as PDF</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">File</property>
+      </packing>
+    </child>
+
+    <!-- Home Tab -->
+    <child>
+      <object class="GtkBox" id="HomeBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+
+        <!-- Clipboard Section -->
+        <child>
+          <object class="GtkBox" id="ClipboardSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="HomePaste">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Paste</property>
+                <property name="tooltip_text">Paste</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="HomeCut">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Cut</property>
+                <property name="tooltip_text">Cut</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="HomeCopy">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Copy</property>
+                <property name="tooltip_text">Copy</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Undo/Redo Section -->
+        <child>
+          <object class="GtkBox" id="UndoSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="HomeUndo">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Undo</property>
+                <property name="tooltip_text">Undo</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="HomeRedo">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Redo</property>
+                <property name="tooltip_text">Redo</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Font Section -->
+        <child>
+          <object class="GtkBox" id="FontSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkToggleButton" id="HomeBold">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Bold</property>
+                <property name="tooltip_text">Bold</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeItalic">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Italic</property>
+                <property name="tooltip_text">Italic</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeUnderline">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:Underline</property>
+                <property name="tooltip_text">Underline</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Alignment Section -->
+        <child>
+          <object class="GtkBox" id="AlignSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkToggleButton" id="HomeAlignLeft">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:LeftPara</property>
+                <property name="tooltip_text">Align Left</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeAlignCenter">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:CenterPara</property>
+                <property name="tooltip_text">Center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeAlignRight">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:RightPara</property>
+                <property name="tooltip_text">Align Right</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeAlignJustify">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:JustifyPara</property>
+                <property name="tooltip_text">Justify</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Lists Section -->
+        <child>
+          <object class="GtkBox" id="ListSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkToggleButton" id="HomeBullets">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:DefaultBullet</property>
+                <property name="tooltip_text">Bullets</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="HomeNumbering">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:DefaultNumbering</property>
+                <property name="tooltip_text">Numbering</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Find Section -->
+        <child>
+          <object class="GtkButton" id="HomeFind">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:SearchDialog</property>
+            <property name="tooltip_text">Find &amp; Replace</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">Home</property>
+      </packing>
+    </child>
+
+    <!-- Insert Tab -->
+    <child>
+      <object class="GtkBox" id="InsertBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkButton" id="InsertTable">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertTable</property>
+            <property name="tooltip_text">Insert Table</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertImage">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertGraphic</property>
+            <property name="tooltip_text">Insert Image</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertChart">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertObjectChart</property>
+            <property name="tooltip_text">Insert Chart</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertHyperlink">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertHyperlinkDlg</property>
+            <property name="tooltip_text">Insert Hyperlink</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertComment">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertAnnotation</property>
+            <property name="tooltip_text">Insert Comment</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertHeader">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertPageHeader</property>
+            <property name="tooltip_text">Header</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertFooter">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertPageFooter</property>
+            <property name="tooltip_text">Footer</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="InsertPageNumber">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertPageNumberField</property>
+            <property name="tooltip_text">Page Number</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">Insert</property>
+      </packing>
+    </child>
+
+    <!-- Layout Tab -->
+    <child>
+      <object class="GtkBox" id="LayoutBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkButton" id="LayoutPageSetup">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:PageDialog</property>
+            <property name="tooltip_text">Page Setup</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="LayoutMargins">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:RulerMenu</property>
+            <property name="tooltip_text">Margins</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="LayoutColumns">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:FormatColumns</property>
+            <property name="tooltip_text">Columns</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="LayoutBreak">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:InsertBreak</property>
+            <property name="tooltip_text">Insert Break</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">Layout</property>
+      </packing>
+    </child>
+
+    <!-- Review Tab (with PrePanda AI) -->
+    <child>
+      <object class="GtkBox" id="ReviewBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+
+        <!-- PrePanda AI Section -->
+        <child>
+          <object class="GtkBox" id="PrePandaSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="PrePandaAsk">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">Ask PrePanda</property>
+                <property name="tooltip_text">Ask PrePanda AI Assistant</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="PrePandaSummarize">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">Summarize</property>
+                <property name="tooltip_text">Summarize selected text</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="PrePandaImprove">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">Improve</property>
+                <property name="tooltip_text">Improve writing</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="PrePandaTranslate">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">Translate</property>
+                <property name="tooltip_text">Translate text</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Proofing Section -->
+        <child>
+          <object class="GtkBox" id="ProofingSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="ReviewSpelling">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:SpellingDialog</property>
+                <property name="tooltip_text">Spelling</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="ReviewThesaurus">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:ThesaurusDialog</property>
+                <property name="tooltip_text">Thesaurus</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="ReviewWordCount">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:WordCountDialog</property>
+                <property name="tooltip_text">Word Count</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Comments Section -->
+        <child>
+          <object class="GtkBox" id="CommentsSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="ReviewNewComment">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:InsertAnnotation</property>
+                <property name="tooltip_text">New Comment</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="ReviewShowComments">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:ShowAnnotations</property>
+                <property name="tooltip_text">Show Comments</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+
+        <!-- Track Changes Section -->
+        <child>
+          <object class="GtkBox" id="TrackChangesSection">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkToggleButton" id="ReviewTrackChanges">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:TrackChanges</property>
+                <property name="tooltip_text">Track Changes</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="ReviewAccept">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:AcceptTrackedChange</property>
+                <property name="tooltip_text">Accept Change</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="ReviewReject">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="action_name">.uno:RejectTrackedChange</property>
+                <property name="tooltip_text">Reject Change</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">Review</property>
+      </packing>
+    </child>
+
+    <!-- View Tab -->
+    <child>
+      <object class="GtkBox" id="ViewBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkToggleButton" id="ViewRuler">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Ruler</property>
+            <property name="tooltip_text">Ruler</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="ViewSidebar">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Sidebar</property>
+            <property name="tooltip_text">Sidebar</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="ViewZoomIn">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:ZoomIn</property>
+            <property name="tooltip_text">Zoom In</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="ViewZoomOut">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:ZoomOut</property>
+            <property name="tooltip_text">Zoom Out</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="ViewZoom100">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:Zoom100Percent</property>
+            <property name="tooltip_text">100%</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="ViewFullScreen">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="action_name">.uno:FullScreen</property>
+            <property name="tooltip_text">Full Screen</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="tab_label">View</property>
+      </packing>
+    </child>
+
+  </object>
+</interface>

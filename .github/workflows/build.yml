@@ -1,0 +1,246 @@
+name: Build PreOffice
+
+on:
+  push:
+    branches: [main, preoffice/main]
+    tags: ['v*']
+  pull_request:
+    branches: [main, preoffice/main]
+  workflow_dispatch:
+
+env:
+  PREOFFICE_VERSION: "1.0.0"
+
+jobs:
+  # Smoke test - verify build configuration
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Validate structure
+        run: |
+          echo "Checking repository structure..."
+          test -f CLAUDE.md
+          test -f docs/BUILDING.md
+          test -f compliance/NOTICE
+          test -d presearch/brand
+          test -d presearch/integrations
+          echo "Structure validated!"
+
+      - name: Validate brand tokens
+        run: |
+          echo "Checking brand tokens..."
+          python3 -c "import json; json.load(open('presearch/brand/tokens.json'))"
+          echo "Brand tokens valid!"
+
+  # Build integrations/extensions
+  build-integrations:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build extension package
+        run: |
+          echo "Building PreOffice extension..."
+          cd presearch/integrations
+          # Package all integrations into a single .oxt
+          mkdir -p dist
+          zip -r dist/preoffice-integrations.zip \
+            presearch-search/ pregpt/ prestorage/ privacy-check/
+          echo "Extension built!"
+
+      - name: Upload integration artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: preoffice-integrations
+          path: presearch/integrations/dist/
+
+  # Linux build (fastest, used for CI validation)
+  build-linux:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git build-essential zip \
+            libcups2-dev libfontconfig1-dev gperf \
+            libxrandr-dev libxinerama-dev libxcursor-dev \
+            nasm libssl-dev libxslt1-dev libxml2-dev \
+            libgtk-3-dev ccache
+
+      - name: Configure build
+        run: |
+          cd core
+          ./autogen.sh \
+            --enable-release-build \
+            --with-lang="en-US" \
+            --disable-online-update \
+            --without-java
+
+      - name: Build
+        run: |
+          cd core
+          make -j$(nproc)
+
+      - name: Package
+        run: |
+          cd core
+          make install DESTDIR=$PWD/install
+          # Create AppImage or tarball
+          tar -czf preoffice-${{ env.PREOFFICE_VERSION }}-linux-x86_64.tar.gz -C install .
+
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preoffice-linux
+          path: core/preoffice-*.tar.gz
+
+  # macOS build
+  build-macos:
+    runs-on: macos-latest
+    needs: validate
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          brew install autoconf automake ccache nasm pkg-config
+
+      - name: Configure build
+        run: |
+          cd core
+          ./autogen.sh \
+            --enable-release-build \
+            --with-lang="en-US" \
+            --disable-online-update
+
+      - name: Build
+        run: |
+          cd core
+          make -j$(sysctl -n hw.ncpu)
+
+      - name: Package DMG
+        run: |
+          cd core
+          # Create DMG from app bundle
+          hdiutil create -volname "PreOffice" \
+            -srcfolder instdir/PreOffice.app \
+            -ov -format UDZO \
+            preoffice-${{ env.PREOFFICE_VERSION }}-macos.dmg
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preoffice-macos
+          path: core/preoffice-*.dmg
+
+  # Windows build
+  build-windows:
+    runs-on: windows-latest
+    needs: validate
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Cygwin
+        uses: cygwin/cygwin-install-action@v4
+        with:
+          packages: >-
+            autoconf automake bison flex gcc-g++ git gnupg
+            gperf make perl zip
+
+      - name: Configure build
+        shell: C:\cygwin\bin\bash.exe -l {0}
+        run: |
+          cd /cygdrive/d/a/preoffice/preoffice/core
+          ./autogen.sh \
+            --enable-release-build \
+            --with-lang="en-US" \
+            --disable-online-update \
+            --with-visual-studio=2022
+
+      - name: Build
+        shell: C:\cygwin\bin\bash.exe -l {0}
+        run: |
+          cd /cygdrive/d/a/preoffice/preoffice/core
+          make
+
+      - name: Package MSI
+        run: |
+          # MSI creation would go here
+          echo "MSI packaging placeholder"
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preoffice-windows
+          path: core/preoffice-*.msi
+
+  # Generate SBOM
+  sbom:
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-macos, build-windows]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          format: cyclonedx-json
+          output-file: sbom.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.json
+
+  # Create release
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-macos, build-windows, sbom]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Generate checksums
+        run: |
+          sha256sum preoffice-*/* > checksums.sha256
+          sha512sum preoffice-*/* > checksums.sha512
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            preoffice-linux/*
+            preoffice-macos/*
+            preoffice-windows/*
+            sbom/*
+            checksums.sha256
+            checksums.sha512
+          generate_release_notes: true

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./autogen.sh)",
+      "Bash(brew install:*)",
+      "Bash(sudo xcodebuild:*)",
+      "Bash(PATH=\"/usr/local/opt/make/libexec/gnubin:$PATH\" ./autogen.sh:*)",
+      "Bash(PATH=\"/usr/local/opt/make/libexec/gnubin:/usr/local/bin:$PATH\" ./autogen.sh:*)",
+      "Bash(PATH=\"/usr/local/opt/make/libexec/gnubin:/usr/local/bin:$PATH\" make:*)",
+      "Bash(chmod:*)",
+      "Bash(PATH=\"/usr/local/opt/make/libexec/gnubin:/usr/local/bin:$PATH\" PKG_CONFIG=/usr/local/bin/pkg-config make:*)",
+      "Bash(./build.sh:*)",
+      "Bash(./tools/build.sh:*)",
+      "Bash(sudo ln:*)",
+      "Bash(./autogen.sh:*)",
+      "Bash(make)",
+      "Bash(make:*)",
+      "Bash(/usr/local/opt/make/libexec/gnubin/make --version)",
+      "Bash(/usr/local/bin/gmake:*)",
+      "Bash(/usr/local/bin/unopkg add:*)",
+      "Bash(open /Applications/LibreOffice.app)",
+      "Bash(pkill:*)",
+      "Bash(/usr/local/bin/unopkg:*)",
+      "Bash(unzip:*)"
+    ]
+  }
+}

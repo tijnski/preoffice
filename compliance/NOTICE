@@ -1,0 +1,36 @@
+PreOffice
+Copyright 2024-2026 Presearch
+
+PreOffice is based on LibreOffice, which is:
+Copyright The Document Foundation and contributors.
+
+This product includes software developed by:
+- The Document Foundation (https://www.documentfoundation.org/)
+- LibreOffice contributors
+- Apache OpenOffice contributors
+- StarOffice/OpenOffice.org contributors
+
+LibreOffice is a registered trademark of The Document Foundation.
+
+---
+
+THIRD-PARTY NOTICES
+
+The following third-party libraries and components are included:
+
+See compliance/LICENSES/ for full license texts.
+
+---
+
+ATTRIBUTION REQUIREMENTS
+
+When distributing PreOffice or derivative works:
+1. Include this NOTICE file
+2. Include all license files from compliance/LICENSES/
+3. Display "Based on LibreOffice technology" in About dialog
+4. Do not use LibreOffice trademarks except as required for attribution
+
+---
+
+For the full list of contributors to LibreOffice, see:
+https://www.libreoffice.org/about-us/credits/

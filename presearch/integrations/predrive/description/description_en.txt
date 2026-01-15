@@ -1,0 +1,21 @@
+PreDrive Integration for PreOffice
+
+Save and open documents directly from PreDrive cloud storage.
+
+Features:
+- Open documents from PreDrive
+- Save documents to PreDrive
+- Browse files and folders
+- Create new folders
+- Automatic version history
+- WebDAV support for seamless editing
+
+This extension integrates PreOffice with PreDrive, the cloud storage
+component of the PreSuite ecosystem by Presearch.
+
+Requirements:
+- PreOffice 26.8 or later (or LibreOffice 7.0+)
+- PreDrive server access
+- Valid user account
+
+For more information, visit: https://presearch.com/predrive

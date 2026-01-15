@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog"
+            xmlns:script="http://openoffice.org/2000/script"
+            dlg:id="PreDriveOptions"
+            dlg:left="0" dlg:top="0"
+            dlg:width="260" dlg:height="185"
+            dlg:closeable="true"
+            dlg:withtitlebar="false">
+ <dlg:bulletinboard>
+
+  <!-- Section Header -->
+  <dlg:fixedline dlg:id="FixedLine1"
+                 dlg:tab-index="0"
+                 dlg:left="6" dlg:top="6"
+                 dlg:width="248" dlg:height="8"
+                 dlg:value="PreDrive Cloud Storage Settings"/>
+
+  <!-- API URL -->
+  <dlg:text dlg:id="lblApiUrl"
+            dlg:left="12" dlg:top="22"
+            dlg:width="80" dlg:height="10"
+            dlg:value="PreDrive API URL:"/>
+
+  <dlg:textfield dlg:id="txtApiUrl"
+                 dlg:tab-index="1"
+                 dlg:left="12" dlg:top="34"
+                 dlg:width="236" dlg:height="14"
+                 dlg:value="https://predrive.eu/api"/>
+
+  <!-- API Key -->
+  <dlg:text dlg:id="lblApiKey"
+            dlg:left="12" dlg:top="54"
+            dlg:width="80" dlg:height="10"
+            dlg:value="API Key:"/>
+
+  <dlg:textfield dlg:id="txtApiKey"
+                 dlg:tab-index="2"
+                 dlg:left="12" dlg:top="66"
+                 dlg:width="236" dlg:height="14"/>
+
+  <dlg:text dlg:id="lblApiHelp"
+            dlg:left="12" dlg:top="82"
+            dlg:width="236" dlg:height="10"
+            dlg:value="Get your API key from predrive.eu/settings"/>
+
+  <!-- Default Folder -->
+  <dlg:text dlg:id="lblFolder"
+            dlg:left="12" dlg:top="98"
+            dlg:width="80" dlg:height="10"
+            dlg:value="Default Upload Folder:"/>
+
+  <dlg:textfield dlg:id="txtFolder"
+                 dlg:tab-index="3"
+                 dlg:left="12" dlg:top="110"
+                 dlg:width="140" dlg:height="14"
+                 dlg:value="/"/>
+
+  <!-- Enable/Disable -->
+  <dlg:checkbox dlg:id="chkEnabled"
+                dlg:tab-index="4"
+                dlg:left="12" dlg:top="132"
+                dlg:width="200" dlg:height="12"
+                dlg:value="Enable PreDrive integration"
+                dlg:checked="true"/>
+
+  <!-- Info Section -->
+  <dlg:fixedline dlg:id="FixedLine2"
+                 dlg:tab-index="5"
+                 dlg:left="6" dlg:top="150"
+                 dlg:width="248" dlg:height="8"
+                 dlg:value="Usage"/>
+
+  <dlg:text dlg:id="lblInfo"
+            dlg:left="12" dlg:top="164"
+            dlg:width="236" dlg:height="10"
+            dlg:value="Upload documents via PreDrive menu or toolbar"/>
+
+ </dlg:bulletinboard>
+</dlg:window>

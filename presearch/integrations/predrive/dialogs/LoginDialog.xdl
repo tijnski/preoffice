@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog"
+            xmlns:script="http://openoffice.org/2000/script"
+            dlg:id="LoginDialog"
+            dlg:left="100"
+            dlg:top="100"
+            dlg:width="220"
+            dlg:height="145"
+            dlg:closeable="true"
+            dlg:moveable="true"
+            dlg:title="Login to PreDrive">
+
+    <!-- Logo/Header -->
+    <dlg:text dlg:id="HeaderLabel"
+              dlg:left="10"
+              dlg:top="10"
+              dlg:width="200"
+              dlg:height="14"
+              dlg:value="Connect to PreDrive Cloud Storage"
+              dlg:fontweight="bold"/>
+
+    <!-- Server URL -->
+    <dlg:text dlg:id="ServerLabel"
+              dlg:left="10"
+              dlg:top="32"
+              dlg:width="50"
+              dlg:height="10"
+              dlg:value="Server:"/>
+
+    <dlg:textfield dlg:id="ServerUrl"
+                   dlg:left="65"
+                   dlg:top="30"
+                   dlg:width="145"
+                   dlg:height="14"
+                   dlg:tabindex="0"
+                   dlg:value="http://localhost:4000"/>
+
+    <!-- Email -->
+    <dlg:text dlg:id="EmailLabel"
+              dlg:left="10"
+              dlg:top="52"
+              dlg:width="50"
+              dlg:height="10"
+              dlg:value="Email:"/>
+
+    <dlg:textfield dlg:id="Email"
+                   dlg:left="65"
+                   dlg:top="50"
+                   dlg:width="145"
+                   dlg:height="14"
+                   dlg:tabindex="1"/>
+
+    <!-- JWT Token / Password -->
+    <dlg:text dlg:id="TokenLabel"
+              dlg:left="10"
+              dlg:top="72"
+              dlg:width="50"
+              dlg:height="10"
+              dlg:value="Token:"/>
+
+    <dlg:textfield dlg:id="JwtToken"
+                   dlg:left="65"
+                   dlg:top="70"
+                   dlg:width="145"
+                   dlg:height="14"
+                   dlg:tabindex="2"
+                   dlg:echochar="*"/>
+
+    <!-- Remember me -->
+    <dlg:checkbox dlg:id="RememberMe"
+                  dlg:left="65"
+                  dlg:top="90"
+                  dlg:width="145"
+                  dlg:height="12"
+                  dlg:tabindex="3"
+                  dlg:value="Remember me"
+                  dlg:checked="true"/>
+
+    <!-- Buttons -->
+    <dlg:button dlg:id="LoginButton"
+                dlg:left="65"
+                dlg:top="115"
+                dlg:width="60"
+                dlg:height="16"
+                dlg:tabindex="4"
+                dlg:default="true"
+                dlg:value="Login"
+                dlg:button-type="ok"/>
+
+    <dlg:button dlg:id="CancelButton"
+                dlg:left="130"
+                dlg:top="115"
+                dlg:width="60"
+                dlg:height="16"
+                dlg:tabindex="5"
+                dlg:value="Cancel"
+                dlg:button-type="cancel"/>
+
+    <!-- Help link -->
+    <dlg:text dlg:id="HelpLink"
+              dlg:left="10"
+              dlg:top="120"
+              dlg:width="50"
+              dlg:height="10"
+              dlg:value="Need help?"
+              dlg:fontsize="8"
+              dlg:textcolor="0x2D8EFF"/>
+
+</dlg:window>

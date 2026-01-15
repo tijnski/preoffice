@@ -1,0 +1,24 @@
+PreOffice Suite - AI-Powered Office Extension by Presearch
+
+PreOffice brings the power of AI directly into your LibreOffice workflow with PrePanda, your intelligent writing assistant.
+
+Features:
+- Ask PrePanda: Chat with AI about your document, ask questions, get suggestions
+- Summarize Selection: Instantly summarize selected text
+- Improve Writing: Enhance your writing style and clarity
+- Translate: Translate text to any language
+- Explain Selection: Get explanations of complex text
+- Proofread: Check for grammar, spelling, and style issues
+
+Integration:
+- Menu bar integration under "PrePanda" menu
+- Toolbar buttons for quick access
+- Right-click context menu for selected text
+- Keyboard shortcut: Ctrl+Shift+P to open PrePanda
+
+Privacy:
+- Your documents stay on your device
+- Only selected text is sent when you explicitly request AI assistance
+- Powered by Venice.ai for privacy-preserving AI
+
+For more information, visit https://presearch.com/preoffice

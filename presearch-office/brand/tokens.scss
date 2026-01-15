@@ -1,0 +1,127 @@
+// Presearch Office Brand Tokens - Auto-generated from tokens.json
+// Do not edit directly - modify tokens.json and regenerate
+
+// Primary Colors
+$pre-primary: #2D8EFF;
+
+// Text Colors
+$pre-text-primary: #000000;
+$pre-text-secondary: #494949;
+
+// Background Colors
+$pre-bg-tint: #EAF3FF;
+$pre-bg-soft: #FAFBFC;
+$pre-bg-base: #FFFFFF;
+
+// Blue Scale - Dark
+$pre-blue-dark: (
+  1: #287FE5,
+  2: #2471CC,
+  3: #1F63B2,
+  4: #1B5599,
+  5: #16477F,
+  6: #123866,
+  7: #0D2A4C,
+  8: #091C33,
+  9: #040E19,
+  10: #000000
+);
+
+// Blue Scale - Light
+$pre-blue-light: (
+  1: #2D8EFF,
+  2: #4299FF,
+  3: #56A4FF,
+  4: #6CAFFF,
+  5: #81BBFF,
+  6: #96C6FF,
+  7: #ABD1FF,
+  8: #C0DDFF,
+  9: #D5E8FF,
+  10: #EAF3FF,
+  11: #FFFFFF
+);
+
+// Semantic Colors
+$pre-accent: #2D8EFF;
+$pre-accent-hover: #287FE5;
+$pre-accent-active: #2471CC;
+$pre-border: #D5E8FF;
+$pre-border-strong: #81BBFF;
+$pre-focus: #56A4FF;
+$pre-disabled: #C0DDFF;
+$pre-error: #DC3545;
+$pre-warning: #FFC107;
+$pre-success: #28A745;
+
+// Typography
+$pre-font-preferred: "Proxima Nova";
+$pre-font-fallback: "Inter", "Noto Sans", "Arial", sans-serif;
+$pre-font-stack: $pre-font-preferred, $pre-font-fallback;
+
+// Dark Mode Colors
+$pre-dark: (
+  primary: #4299FF,
+  text-primary: #FFFFFF,
+  text-secondary: #C0DDFF,
+  bg-tint: #0D2A4C,
+  bg-soft: #091C33,
+  bg-base: #040E19
+);
+
+// High Contrast Colors
+$pre-high-contrast: (
+  primary: #2D8EFF,
+  text-primary: #000000,
+  text-secondary: #000000,
+  bg-tint: #FFFFFF,
+  bg-soft: #FFFFFF,
+  bg-base: #FFFFFF
+);
+
+// Mixins
+@mixin presearch-button {
+  background-color: $pre-primary;
+  color: $pre-bg-base;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-family: $pre-font-stack;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $pre-accent-hover;
+  }
+
+  &:active {
+    background-color: $pre-accent-active;
+  }
+
+  &:focus {
+    outline: 2px solid $pre-focus;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background-color: $pre-disabled;
+    cursor: not-allowed;
+  }
+}
+
+@mixin presearch-card {
+  background-color: $pre-bg-base;
+  border: 1px solid $pre-border;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+// Helper function for blue scale
+@function blue-dark($step) {
+  @return map-get($pre-blue-dark, $step);
+}
+
+@function blue-light($step) {
+  @return map-get($pre-blue-light, $step);
+}

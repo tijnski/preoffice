@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Common"
+                    oor:package="org.openoffice.Office">
+
+  <!--
+    PreOffice Dark Mode Color Scheme
+    Uses Presearch Blue (#2D8EFF) as accent on dark backgrounds
+  -->
+
+  <node oor:name="Appearance">
+    <!-- Dark theme base colors -->
+
+    <!-- Document background: Dark gray #1E1E1E (1973790) -->
+    <prop oor:name="DocumentBackground">
+      <value>1973790</value>
+    </prop>
+
+    <!-- Application background: Very dark #121212 (1184274) -->
+    <prop oor:name="ApplicationBackground">
+      <value>1184274</value>
+    </prop>
+
+    <!-- Document boundaries: Subtle gray #3D3D3D (4013373) -->
+    <prop oor:name="DocumentBoundaries">
+      <value>4013373</value>
+    </prop>
+
+    <!-- App boundaries: Medium gray #4A4A4A (4868682) -->
+    <prop oor:name="AppBackground">
+      <value>4868682</value>
+    </prop>
+
+    <!-- Object boundaries: Presearch Blue #2D8EFF (2985727) -->
+    <prop oor:name="ObjectBoundaries">
+      <value>2985727</value>
+    </prop>
+
+    <!-- Table boundaries: Gray #555555 (5592405) -->
+    <prop oor:name="TableBoundaries">
+      <value>5592405</value>
+    </prop>
+
+    <!-- Font color: Light #E0E0E0 (14737632) -->
+    <prop oor:name="FontColor">
+      <value>14737632</value>
+    </prop>
+
+    <!-- Links: Presearch Blue #2D8EFF (2985727) -->
+    <prop oor:name="Links">
+      <value>2985727</value>
+    </prop>
+
+    <!-- Visited Links: Lighter blue #5BA3FF (6005759) -->
+    <prop oor:name="LinksVisited">
+      <value>6005759</value>
+    </prop>
+
+    <!-- Spell check underline: Red #FF6B6B (16738155) -->
+    <prop oor:name="Spell">
+      <value>16738155</value>
+    </prop>
+
+    <!-- Smart tags: Orange #FFB347 (16757575) -->
+    <prop oor:name="SmartTags">
+      <value>16757575</value>
+    </prop>
+
+    <!-- Shadow: Very dark with transparency -->
+    <prop oor:name="Shadow">
+      <value>986895</value>
+    </prop>
+
+  </node>
+
+  <node oor:name="View">
+    <!-- Selection highlight: Presearch Blue with alpha #2D8EFF -->
+    <prop oor:name="SelectionBackground">
+      <value>2985727</value>
+    </prop>
+
+    <!-- Workspace: Dark #252525 (2434341) -->
+    <prop oor:name="Workspace">
+      <value>2434341</value>
+    </prop>
+  </node>
+
+</oor:component-data>

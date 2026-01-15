@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog"
+            xmlns:script="http://openoffice.org/2000/script"
+            dlg:id="PrePandaOptions"
+            dlg:left="0" dlg:top="0"
+            dlg:width="260" dlg:height="185"
+            dlg:closeable="true"
+            dlg:withtitlebar="false">
+ <dlg:bulletinboard>
+
+  <!-- Section Header -->
+  <dlg:fixedline dlg:id="FixedLine1"
+                 dlg:tab-index="0"
+                 dlg:left="6" dlg:top="6"
+                 dlg:width="248" dlg:height="8"
+                 dlg:value="PrePanda AI Settings"/>
+
+  <!-- API Key -->
+  <dlg:text dlg:id="lblApiKey"
+            dlg:left="12" dlg:top="22"
+            dlg:width="80" dlg:height="10"
+            dlg:value="Venice.ai API Key:"/>
+
+  <dlg:textfield dlg:id="txtApiKey"
+                 dlg:tab-index="1"
+                 dlg:left="12" dlg:top="34"
+                 dlg:width="236" dlg:height="14"/>
+
+  <dlg:text dlg:id="lblApiHelp"
+            dlg:left="12" dlg:top="50"
+            dlg:width="236" dlg:height="10"
+            dlg:value="Get your key at: venice.ai/settings/api"/>
+
+  <!-- Model Selection -->
+  <dlg:text dlg:id="lblModel"
+            dlg:left="12" dlg:top="68"
+            dlg:width="60" dlg:height="10"
+            dlg:value="AI Model:"/>
+
+  <dlg:menulist dlg:id="lstModel"
+                dlg:tab-index="2"
+                dlg:left="12" dlg:top="80"
+                dlg:width="140" dlg:height="14"
+                dlg:dropdown="true"
+                dlg:linecount="3">
+    <dlg:menupopup>
+      <dlg:menuitem dlg:value="llama-3.3-70b"/>
+      <dlg:menuitem dlg:value="llama-3.1-405b"/>
+      <dlg:menuitem dlg:value="deepseek-r1-671b"/>
+    </dlg:menupopup>
+  </dlg:menulist>
+
+  <!-- Language Selection -->
+  <dlg:text dlg:id="lblLanguage"
+            dlg:left="12" dlg:top="102"
+            dlg:width="80" dlg:height="10"
+            dlg:value="Response Language:"/>
+
+  <dlg:menulist dlg:id="lstLanguage"
+                dlg:tab-index="3"
+                dlg:left="12" dlg:top="114"
+                dlg:width="140" dlg:height="14"
+                dlg:dropdown="true"
+                dlg:linecount="6">
+    <dlg:menupopup>
+      <dlg:menuitem dlg:value="English"/>
+      <dlg:menuitem dlg:value="Dutch"/>
+      <dlg:menuitem dlg:value="German"/>
+      <dlg:menuitem dlg:value="French"/>
+      <dlg:menuitem dlg:value="Spanish"/>
+      <dlg:menuitem dlg:value="Auto-detect"/>
+    </dlg:menupopup>
+  </dlg:menulist>
+
+  <!-- Info Section -->
+  <dlg:fixedline dlg:id="FixedLine2"
+                 dlg:tab-index="4"
+                 dlg:left="6" dlg:top="138"
+                 dlg:width="248" dlg:height="8"
+                 dlg:value="Usage"/>
+
+  <dlg:text dlg:id="lblInfo"
+            dlg:left="12" dlg:top="152"
+            dlg:width="236" dlg:height="10"
+            dlg:value="Access PrePanda via the menu or Ctrl+Shift+P"/>
+
+  <dlg:text dlg:id="lblInfo2"
+            dlg:left="12" dlg:top="164"
+            dlg:width="236" dlg:height="10"
+            dlg:value="Select text and choose an action to get AI help"/>
+
+ </dlg:bulletinboard>
+</dlg:window>

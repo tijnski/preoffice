@@ -1,0 +1,11 @@
+# Presearch Icon Theme - Fallback Links to Colibre
+# Format: presearch/icon.svg colibre/icon.svg
+#
+# This file maps missing Presearch icons to their Colibre equivalents.
+# Add entries here for icons that should fall back to the base theme.
+#
+# Note: Only list icons that are NOT in src-svg/ and need fallback.
+# Icons present in src-svg/ will override these fallbacks.
+
+# The theme inherits from colibre by default
+# All icons not explicitly overridden will use colibre

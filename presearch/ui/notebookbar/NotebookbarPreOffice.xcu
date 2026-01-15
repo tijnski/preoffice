@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Notebookbar Configuration
+  Custom ribbon-style toolbar for PreOffice
+
+  This configuration defines a modern tabbed interface with:
+  - Home tab (common actions)
+  - Insert tab
+  - Layout tab
+  - Review tab (includes PrePanda AI)
+  - View tab
+-->
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Notebookbar"
+                    oor:package="org.openoffice.Office.UI">
+
+  <node oor:name="Applications">
+
+    <!-- Writer Notebookbar -->
+    <node oor:name="Writer" oor:op="replace">
+      <node oor:name="Implementations">
+        <node oor:name="PreOffice" oor:op="replace">
+          <prop oor:name="Label">
+            <value>PreOffice</value>
+          </prop>
+          <prop oor:name="File">
+            <value>notebookbar_preoffice.ui</value>
+          </prop>
+          <prop oor:name="HasMenubar">
+            <value>false</value>
+          </prop>
+        </node>
+      </node>
+    </node>
+
+    <!-- Calc Notebookbar -->
+    <node oor:name="Calc" oor:op="replace">
+      <node oor:name="Implementations">
+        <node oor:name="PreOffice" oor:op="replace">
+          <prop oor:name="Label">
+            <value>PreOffice</value>
+          </prop>
+          <prop oor:name="File">
+            <value>notebookbar_preoffice.ui</value>
+          </prop>
+          <prop oor:name="HasMenubar">
+            <value>false</value>
+          </prop>
+        </node>
+      </node>
+    </node>
+
+    <!-- Impress Notebookbar -->
+    <node oor:name="Impress" oor:op="replace">
+      <node oor:name="Implementations">
+        <node oor:name="PreOffice" oor:op="replace">
+          <prop oor:name="Label">
+            <value>PreOffice</value>
+          </prop>
+          <prop oor:name="File">
+            <value>notebookbar_preoffice.ui</value>
+          </prop>
+          <prop oor:name="HasMenubar">
+            <value>false</value>
+          </prop>
+        </node>
+      </node>
+    </node>
+
+    <!-- Draw Notebookbar -->
+    <node oor:name="Draw" oor:op="replace">
+      <node oor:name="Implementations">
+        <node oor:name="PreOffice" oor:op="replace">
+          <prop oor:name="Label">
+            <value>PreOffice</value>
+          </prop>
+          <prop oor:name="File">
+            <value>notebookbar_preoffice.ui</value>
+          </prop>
+          <prop oor:name="HasMenubar">
+            <value>false</value>
+          </prop>
+        </node>
+      </node>
+    </node>
+
+  </node>
+
+</oor:component-data>

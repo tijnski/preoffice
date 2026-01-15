@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PreOffice Appearance Settings
+  Sets Presearch Blue as accent color throughout the UI
+
+  Color values in decimal:
+  - Presearch Blue (#2D8EFF): 2985727
+  - Light Blue (#EAF3FF): 15397887
+  - Dark Blue (#1A7AE8): 1735400
+  - White (#FFFFFF): 16777215
+  - Light Gray (#FAFBFC): 16448508
+  - Text Black (#000000): 0
+  - Text Gray (#494949): 4803913
+-->
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="Common"
+                    oor:package="org.openoffice.Office">
+  <node oor:name="Appearance">
+    <!-- Document colors -->
+    <prop oor:name="DocumentBoundaries">
+      <value>2985727</value>
+    </prop>
+    <!-- Application background -->
+    <prop oor:name="ApplicationBackground">
+      <value>16448508</value>
+    </prop>
+  </node>
+</oor:component-data>
