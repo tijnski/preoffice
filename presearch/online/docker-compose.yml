@@ -38,6 +38,7 @@ services:
       - NODE_ENV=production
       - PORT=8080
       - PREDRIVE_API_URL=${PREDRIVE_API_URL:-https://predrive.eu/api}
+      - USE_PREDRIVE=${USE_PREDRIVE:-true}
       - WOPI_BASE_URL=${WOPI_BASE_URL:-https://preoffice.site/wopi}
       - COLLABORA_PUBLIC_URL=${COLLABORA_PUBLIC_URL:-https://preoffice.site}
       - JWT_SECRET=${JWT_SECRET:-change-this-secret-in-production}
