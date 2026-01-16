@@ -21,13 +21,13 @@
   --border-color: #E0E0E0;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
-  /* Dark Mode Variables */
-  --dark-bg-primary: #1E1E1E;
-  --dark-bg-secondary: #252525;
-  --dark-bg-tertiary: #2E2E2E;
-  --dark-text-primary: #E0E0E0;
-  --dark-text-secondary: #A0A0A0;
-  --dark-border-color: #3D3D3D;
+  /* Dark Mode Variables - Presearch neutral grays (not blue-tinted) */
+  --dark-bg-primary: #191919;
+  --dark-bg-secondary: #1e1e1e;
+  --dark-bg-tertiary: #2e2e2e;
+  --dark-text-primary: #e9e9e9;
+  --dark-text-secondary: #9CA3AF;
+  --dark-border-color: #383838;
 }
 
 /* Dark mode class */
@@ -123,7 +123,7 @@
   background: var(--bg-secondary);
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Presearch blue */
 .prepanda-messages::-webkit-scrollbar {
   width: 6px;
 }
@@ -133,12 +133,12 @@
 }
 
 .prepanda-messages::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 3px;
+  background-color: var(--presearch-blue);
+  border-radius: 5px;
 }
 
 .prepanda-messages::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.7);
+  background-color: var(--presearch-blue-dark);
 }
 
 /* Message Bubbles */
@@ -303,16 +303,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, transform 0.1s;
+  transition: opacity 0.15s ease;
   flex-shrink: 0;
 }
 
 .prepanda-send-btn:hover {
-  background: var(--presearch-blue-dark);
+  opacity: 0.6;
 }
 
 .prepanda-send-btn:active {
-  transform: scale(0.95);
+  opacity: 0.5;
 }
 
 .prepanda-send-btn:disabled {
@@ -357,12 +357,11 @@
   border-radius: 16px;
   font-size: 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.15s ease;
 }
 
 .prepanda-suggestion-chip:hover {
-  background: var(--presearch-blue);
-  color: white;
+  opacity: 0.6;
 }
 
 /* Settings Panel */
@@ -509,13 +508,11 @@
   font-size: 12px;
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: opacity 0.15s ease;
 }
 
 .prepanda-action-btn:hover {
-  background: var(--presearch-blue-bg);
-  border-color: var(--presearch-blue);
-  color: var(--presearch-blue);
+  opacity: 0.6;
 }
 
 .prepanda-action-btn svg {
