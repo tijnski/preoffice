@@ -1,6 +1,16 @@
 # PreOffice
 
-**PreOffice** is a LibreOffice fork branded for Presearch and the Pre-suite ecosystem. It provides a sovereignty-first, privacy-respecting office suite with integrated Presearch services.
+Document editing for the PreSuite ecosystem - a LibreOffice fork with Presearch integration.
+
+![PreSuite](https://img.shields.io/badge/PreSuite-Service-0190FF)
+![License](https://img.shields.io/badge/license-MPL%202.0-blue)
+
+**Live URL:** https://preoffice.site
+**Server:** `ssh root@76.13.2.220` → `/opt/preoffice`
+
+## Overview
+
+PreOffice is a sovereignty-first, privacy-respecting office suite with integrated Presearch services. It provides document editing via Collabora Online with PreDrive integration.
 
 ## Features
 
@@ -65,10 +75,24 @@ preoffice/
 
 ## Documentation
 
+**Local docs:**
 - [Building](docs/BUILDING.md) - Build from source
 - [Release Process](docs/RELEASE.md) - Release engineering
 - [Contributing](docs/CONTRIBUTING.md) - How to contribute
 - [Security](docs/SECURITY.md) - Security policy and reporting
+
+**Architecture docs** in [ARC repository](https://github.com/tijnski/presuite-architecture):
+- **[PREOFFICE.md](https://github.com/tijnski/presuite-architecture/blob/main/PREOFFICE.md)** - Architecture, WOPI spec, deployment
+- **[CLAUDE.md](https://github.com/tijnski/presuite-architecture/blob/main/CLAUDE.md)** - AI agent reference
+
+## Related Services
+
+| Service | URL |
+|---------|-----|
+| PreSuite Hub | https://presuite.eu |
+| PreDrive | https://predrive.eu |
+| PreMail | https://premail.site |
+| PreSocial | https://presocial.presuite.eu |
 
 ## License
 
