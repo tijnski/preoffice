@@ -146,6 +146,11 @@
         .loading-dot:nth-child(2) { animation-delay: -0.16s; }
         .loading-dot:nth-child(3) { animation-delay: 0s; }
 
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         /* =====================================================
            HEADER
            ===================================================== */
@@ -896,10 +901,15 @@
         </div>
     </div>
 
+    <!-- Ethers.js for Web3 Authentication -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js"></script>
+
     <script>
         let currentDocType = 'document';
         // OAuth client ID (public, no secret in browser)
         const OAUTH_CLIENT_ID = 'preoffice';
+        // Hub API base URL for web3 auth endpoints
+        const HUB_API_BASE = 'https://presuite.eu/api';
 
         // Check for OAuth callback on page load
         (function handleOAuthCallback() {
@@ -1063,9 +1073,113 @@
             document.getElementById('loginPassword').value = '';
         }
 
-        function initiateWeb3Login() {
-            const redirect = encodeURIComponent(window.location.origin + '/');
-            window.location.href = `https://web3.presearch.com/web3-login?redirect=${redirect}`;
+        /**
+         * Check if MetaMask or compatible wallet is available
+         */
+        function isWeb3Available() {
+            return typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
+        }
+
+        /**
+         * Initiate Web3 login with MetaMask signature
+         */
+        async function initiateWeb3Login() {
+            // Get the web3 button to show loading state
+            const web3Btn = document.querySelector('#loginOptions button:nth-child(2)');
+            const originalHTML = web3Btn.innerHTML;
+
+            if (!isWeb3Available()) {
+                alert('MetaMask or compatible wallet not found. Please install MetaMask to use Web3 login.');
+                return;
+            }
+
+            try {
+                // Show loading state
+                web3Btn.disabled = true;
+                web3Btn.innerHTML = `
+                    <svg style="margin-right: 0.5rem; width: 20px; height: 20px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                        <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                    </svg>
+                    <span>Connecting wallet...</span>
+                `;
+
+                // Step 1: Connect wallet and get address
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const accounts = await provider.send('eth_requestAccounts', []);
+
+                if (!accounts || accounts.length === 0) {
+                    throw new Error('No accounts found. Please connect your wallet.');
+                }
+
+                const address = accounts[0];
+
+                // Step 2: Get nonce from backend
+                const nonceResponse = await fetch(`${HUB_API_BASE}/auth/web3/nonce?address=${address}`);
+                const nonceData = await nonceResponse.json();
+
+                if (!nonceResponse.ok || !nonceData.success) {
+                    throw new Error(nonceData.error?.message || 'Failed to get signing challenge');
+                }
+
+                // Step 3: Sign message with MetaMask
+                web3Btn.innerHTML = `
+                    <svg style="margin-right: 0.5rem; width: 20px; height: 20px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                        <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                    </svg>
+                    <span>Please sign message...</span>
+                `;
+
+                const signer = await provider.getSigner();
+                const signature = await signer.signMessage(nonceData.message);
+
+                // Step 4: Verify signature with backend
+                web3Btn.innerHTML = `
+                    <svg style="margin-right: 0.5rem; width: 20px; height: 20px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                        <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                    </svg>
+                    <span>Verifying...</span>
+                `;
+
+                const verifyResponse = await fetch(`${HUB_API_BASE}/auth/web3/verify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        address,
+                        signature,
+                        message: nonceData.message,
+                    }),
+                });
+
+                const verifyData = await verifyResponse.json();
+
+                if (!verifyResponse.ok || !verifyData.success) {
+                    throw new Error(verifyData.error?.message || 'Authentication failed');
+                }
+
+                // Success! Store token and user info
+                sessionStorage.setItem('preoffice_token', verifyData.token);
+                sessionStorage.setItem('preoffice_user', JSON.stringify(verifyData.user));
+
+                closeLoginModal();
+                updateUIForLoggedInUser();
+
+            } catch (err) {
+                // Handle user rejection
+                if (err.code === 4001) {
+                    alert('Wallet connection or signature was rejected.');
+                } else {
+                    alert(err.message || 'Web3 login failed. Please try again.');
+                }
+            } finally {
+                // Restore button
+                web3Btn.disabled = false;
+                web3Btn.innerHTML = originalHTML;
+            }
         }
 
         async function handleEmailLogin(e) {
