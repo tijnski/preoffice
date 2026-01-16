@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrePanda - AI Writing Assistant</title>
+  <link rel="stylesheet" href="prepanda.css">
+  <style>
+    /* Web-specific overrides */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .prepanda-container.prepanda-web {
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .prepanda-logo {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div id="prepanda-root"></div>
+
+  <script src="prepanda-web.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('prepanda-root');
+      const prepanda = new PrePandaWeb();
+      prepanda.init(container);
+
+      // Expose globally
+      window.prepanda = prepanda;
+
+      // Get access token from URL or parent
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessToken = urlParams.get('access_token');
+      if (accessToken) {
+        prepanda.setAccessToken(accessToken);
+      }
+
+      // Check for dark mode preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        prepanda.setDarkMode(true);
+      }
+
+      // Listen for messages from parent (Collabora/PreOffice)
+      window.addEventListener('message', function(event) {
+        const data = event.data;
+
+        if (data.type === 'setContext' || data.type === 'selection') {
+          prepanda.setDocumentContext(data.text);
+        } else if (data.type === 'setAccessToken') {
+          prepanda.setAccessToken(data.token);
+        } else if (data.type === 'setDarkMode') {
+          prepanda.setDarkMode(data.enabled);
+        } else if (data.type === 'action') {
+          prepanda.handleQuickAction(data.action);
+        }
+      });
+
+      // Notify parent that PrePanda is ready
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: 'prepandaReady' }, '*');
+      }
+    });
+  </script>
+</body>
+</html>

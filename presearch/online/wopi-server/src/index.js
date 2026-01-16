@@ -890,6 +890,291 @@ app.get('/health', (req, res) => {
 });
 
 // =============================================================================
+// PrePanda AI Assistant API
+// =============================================================================
+
+const VENICE_API_URL = process.env.VENICE_API_URL || 'https://api.venice.ai/api/v1';
+const VENICE_API_KEY = process.env.VENICE_API_KEY || '';
+
+/**
+ * PrePanda AI Chat Completion
+ * POST /api/ai/chat
+ * Proxies requests to Venice.ai API with server-side API key
+ */
+app.post('/api/ai/chat', apiRateLimiter, requireBearerAuth, async (req, res) => {
+  const { messages, action, context } = req.body;
+
+  if (!VENICE_API_KEY) {
+    return res.status(503).json({ error: 'AI service not configured' });
+  }
+
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'messages array required' });
+  }
+
+  try {
+    // Build system prompt based on action
+    let systemPrompt = `You are PrePanda, an AI writing assistant for PreOffice (part of the Presearch Pre-suite).
+You help users with document writing, editing, summarizing, and improving their text.
+Be helpful, concise, and professional. Use markdown formatting when appropriate.`;
+
+    // Action-specific prompts
+    const actionPrompts = {
+      summarize: 'The user wants you to summarize the following text. Provide a clear, concise summary.',
+      improve: 'The user wants you to improve the following text. Make it clearer, more professional, and better structured.',
+      translate: 'The user wants you to translate the following text. Ask for the target language if not specified.',
+      explain: 'The user wants you to explain the following text in simple terms.',
+      proofread: 'The user wants you to proofread the following text. Check for grammar, spelling, and punctuation errors.',
+      expand: 'The user wants you to expand the following text with more detail and context.'
+    };
+
+    if (action && actionPrompts[action]) {
+      systemPrompt += `\n\n${actionPrompts[action]}`;
+    }
+
+    if (context) {
+      systemPrompt += `\n\nDocument context:\n${context.substring(0, 4000)}`;
+    }
+
+    // Select model based on task complexity
+    const model = action ? 'llama-3.2-3b' : 'llama-3.3-70b';
+
+    const response = await axios.post(`${VENICE_API_URL}/chat/completions`, {
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...messages.slice(-10) // Limit history
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${VENICE_API_KEY}`
+      },
+      timeout: 30000
+    });
+
+    const content = response.data.choices?.[0]?.message?.content || 'No response generated.';
+
+    res.json({
+      content,
+      model,
+      usage: response.data.usage
+    });
+
+  } catch (error) {
+    logger.error('PrePanda AI error', { error: error.message });
+
+    if (error.response?.status === 401) {
+      return res.status(503).json({ error: 'AI service authentication failed' });
+    }
+
+    res.status(500).json({ error: 'AI service error' });
+  }
+});
+
+/**
+ * PrePanda Quick Actions
+ * POST /api/ai/action
+ * Handles quick actions like summarize, improve, translate
+ */
+app.post('/api/ai/action', apiRateLimiter, requireBearerAuth, async (req, res) => {
+  const { action, text, targetLanguage } = req.body;
+
+  if (!VENICE_API_KEY) {
+    return res.status(503).json({ error: 'AI service not configured' });
+  }
+
+  if (!action || !text) {
+    return res.status(400).json({ error: 'action and text required' });
+  }
+
+  const prompts = {
+    summarize: `Summarize the following text concisely:\n\n${text}`,
+    improve: `Improve the writing of the following text, making it clearer and more professional:\n\n${text}`,
+    translate: `Translate the following text to ${targetLanguage || 'English'}:\n\n${text}`,
+    explain: `Explain the following text in simple terms:\n\n${text}`,
+    proofread: `Proofread the following text and list any grammar, spelling, or punctuation errors:\n\n${text}`,
+    expand: `Expand the following text with more detail and context:\n\n${text}`
+  };
+
+  const prompt = prompts[action];
+  if (!prompt) {
+    return res.status(400).json({ error: 'Invalid action' });
+  }
+
+  try {
+    const response = await axios.post(`${VENICE_API_URL}/chat/completions`, {
+      model: 'llama-3.2-3b',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are PrePanda, an AI writing assistant. Respond directly with the result, no preamble.'
+        },
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${VENICE_API_KEY}`
+      },
+      timeout: 30000
+    });
+
+    const content = response.data.choices?.[0]?.message?.content || 'No response generated.';
+
+    res.json({ content, action });
+
+  } catch (error) {
+    logger.error('PrePanda action error', { action, error: error.message });
+    res.status(500).json({ error: 'AI service error' });
+  }
+});
+
+/**
+ * Check AI service status
+ * GET /api/ai/status
+ */
+app.get('/api/ai/status', (req, res) => {
+  res.json({
+    enabled: !!VENICE_API_KEY,
+    service: 'PrePanda AI',
+    provider: 'Venice.ai'
+  });
+});
+
+// =============================================================================
+// PreDrive File Browser API
+// =============================================================================
+
+/**
+ * Browse PreDrive files/folders
+ * GET /api/browse
+ * Query: folderId (optional, null for root)
+ */
+app.get('/api/browse', apiRateLimiter, requireBearerAuth, async (req, res) => {
+  const { token: userToken } = req.auth;
+  const folderId = req.query.folderId || null;
+
+  if (!config.usePreDrive) {
+    return res.json({ files: [], folders: [], path: [] });
+  }
+
+  try {
+    // Get folder contents
+    const endpoint = folderId ? `/nodes?parentId=${folderId}` : '/nodes';
+    const response = await predriveRequest('GET', endpoint, userToken);
+
+    const nodes = response.data.nodes || response.data || [];
+
+    // Filter to office-compatible files
+    const officeExtensions = ['odt', 'ods', 'odp', 'odg', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'rtf', 'txt', 'csv', 'pdf'];
+
+    const folders = nodes.filter(n => n.type === 'folder').map(n => ({
+      id: n.id,
+      name: n.name,
+      type: 'folder',
+      updatedAt: n.updatedAt
+    }));
+
+    const files = nodes.filter(n => {
+      if (n.type !== 'file') return false;
+      const ext = (n.name || '').split('.').pop().toLowerCase();
+      return officeExtensions.includes(ext);
+    }).map(n => ({
+      id: n.id,
+      name: n.name,
+      type: 'file',
+      docType: getDocumentType(n.name),
+      size: n.file?.size || 0,
+      updatedAt: n.updatedAt
+    }));
+
+    // Get breadcrumb path
+    let path = [{ id: null, name: 'My Files' }];
+    if (folderId) {
+      try {
+        const pathResponse = await predriveRequest('GET', `/nodes/${folderId}/path`, userToken);
+        if (pathResponse.data && Array.isArray(pathResponse.data)) {
+          path = [{ id: null, name: 'My Files' }, ...pathResponse.data];
+        }
+      } catch (e) {
+        // Path endpoint may not exist, use folder info
+        const folderResponse = await predriveRequest('GET', `/nodes/${folderId}`, userToken);
+        path = [{ id: null, name: 'My Files' }, { id: folderId, name: folderResponse.data.name }];
+      }
+    }
+
+    res.json({ folders, files, path });
+
+  } catch (error) {
+    logger.error('Browse error', { error: error.message });
+    res.status(500).json({ error: 'Failed to browse files' });
+  }
+});
+
+/**
+ * Search PreDrive files
+ * GET /api/search
+ * Query: q (search term)
+ */
+app.get('/api/search', apiRateLimiter, requireBearerAuth, async (req, res) => {
+  const { token: userToken } = req.auth;
+  const query = req.query.q;
+
+  if (!query || query.length < 2) {
+    return res.json({ results: [] });
+  }
+
+  if (!config.usePreDrive) {
+    return res.json({ results: [] });
+  }
+
+  try {
+    const response = await predriveRequest('GET', `/nodes/search?q=${encodeURIComponent(query)}`, userToken);
+    const nodes = response.data.nodes || response.data || [];
+
+    const officeExtensions = ['odt', 'ods', 'odp', 'odg', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'rtf', 'txt', 'csv', 'pdf'];
+
+    const results = nodes.filter(n => {
+      if (n.type !== 'file') return false;
+      const ext = (n.name || '').split('.').pop().toLowerCase();
+      return officeExtensions.includes(ext);
+    }).map(n => ({
+      id: n.id,
+      name: n.name,
+      docType: getDocumentType(n.name),
+      size: n.file?.size || 0,
+      updatedAt: n.updatedAt
+    }));
+
+    res.json({ results });
+
+  } catch (error) {
+    logger.error('Search error', { error: error.message });
+    res.json({ results: [] });
+  }
+});
+
+/**
+ * Get user info and storage quota
+ * GET /api/user
+ */
+app.get('/api/user', apiRateLimiter, requireBearerAuth, async (req, res) => {
+  const { userId, name, email } = req.auth;
+
+  res.json({
+    id: userId,
+    name: name || 'User',
+    email: email || null,
+    predriveEnabled: config.usePreDrive
+  });
+});
+
+// =============================================================================
 // Session Cleanup
 // =============================================================================
 

@@ -44,6 +44,9 @@ services:
       - JWT_SECRET=${JWT_SECRET:-change-this-secret-in-production}
       - COLLABORA_URL=http://collabora:9980
       - STORAGE_DIR=/data/preoffice-files
+      # PrePanda AI Configuration
+      - VENICE_API_URL=${VENICE_API_URL:-https://api.venice.ai/api/v1}
+      - VENICE_API_KEY=${VENICE_API_KEY:-}
     volumes:
       - wopi-data:/data/preoffice-files
     depends_on:
