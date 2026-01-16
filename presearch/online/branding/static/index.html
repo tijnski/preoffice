@@ -639,7 +639,7 @@
         <nav class="nav-links">
             <a href="https://predrive.eu">PreDrive</a>
             <a href="https://presearch.com">Presearch</a>
-            <a href="#" class="btn btn-primary" onclick="showLogin()">Sign In</a>
+            <a href="#" class="btn btn-primary" onclick="showLoginModal()">Sign In</a>
         </nav>
     </header>
 
@@ -725,8 +725,207 @@
         </div>
     </div>
 
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content" style="text-align: center;">
+            <h2 style="margin-bottom: 1rem;">Sign in to PreOffice</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Access your documents and create new ones</p>
+
+            <!-- PreSuite SSO Button -->
+            <button class="btn btn-primary" style="width: 100%; padding: 1rem; margin-bottom: 1rem; justify-content: center;" onclick="initiateOAuthLogin()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                Sign in with PreSuite
+            </button>
+            <span style="display: inline-block; background: var(--presearch-blue); color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; margin-bottom: 1rem;">Recommended</span>
+
+            <div style="position: relative; margin: 1.5rem 0;">
+                <div style="position: absolute; inset: 0; display: flex; align-items: center;">
+                    <div style="width: 100%; border-top: 1px solid var(--border-default);"></div>
+                </div>
+                <div style="position: relative; display: flex; justify-content: center;">
+                    <span style="padding: 0 0.75rem; background: white; color: var(--text-tertiary); font-size: 0.875rem;">or</span>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" style="width: 100%;" onclick="redirectToPredrive()">
+                Continue with PreDrive
+            </button>
+
+            <div class="modal-buttons" style="margin-top: 1.5rem; justify-content: center;">
+                <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentDocType = 'document';
+        // OAuth client ID (public, no secret in browser)
+        const OAUTH_CLIENT_ID = 'preoffice';
+
+        // Check for OAuth callback on page load
+        (function handleOAuthCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const state = urlParams.get('state');
+
+            if (code) {
+                // Verify state if we stored one (CSRF protection)
+                const storedState = sessionStorage.getItem('oauth_state');
+                if (storedState && state !== storedState) {
+                    console.error('Invalid OAuth state - possible CSRF attack');
+                    window.history.replaceState({}, '', window.location.pathname);
+                    showError('Authentication failed. Please try again.');
+                    return;
+                }
+                sessionStorage.removeItem('oauth_state');
+
+                // Exchange code for token via backend (keeps client_secret secure)
+                exchangeOAuthCode(code);
+            }
+        })();
+
+        /**
+         * Exchange OAuth code for tokens via our backend
+         * The backend handles the client_secret securely
+         */
+        async function exchangeOAuthCode(code) {
+            const redirectUri = window.location.origin + '/oauth/callback';
+
+            try {
+                // Call our backend to exchange the code (client_secret stays server-side)
+                const response = await fetch('/api/oauth/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code,
+                        redirect_uri: redirectUri,
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || 'Token exchange failed');
+                }
+
+                const data = await response.json();
+
+                if (!data.access_token || !data.id_token) {
+                    throw new Error('Invalid token response');
+                }
+
+                // Safely decode the ID token payload (base64url)
+                const idTokenPayload = safeDecodeJwtPayload(data.id_token);
+                if (!idTokenPayload) {
+                    throw new Error('Invalid ID token');
+                }
+
+                // Store auth info securely (consider using httpOnly cookies in production)
+                sessionStorage.setItem('preoffice_token', data.access_token);
+                sessionStorage.setItem('preoffice_user', JSON.stringify({
+                    id: idTokenPayload.sub,
+                    email: idTokenPayload.email,
+                    name: idTokenPayload.name,
+                }));
+
+                // Clean up URL and redirect to home
+                window.history.replaceState({}, '', '/');
+                updateUIForLoggedInUser();
+            } catch (err) {
+                console.error('OAuth error:', err.message);
+                window.history.replaceState({}, '', window.location.pathname);
+                showError('Sign in failed. Please try again.');
+            }
+        }
+
+        /**
+         * Safely decode JWT payload without verification
+         * (Verification is done server-side)
+         */
+        function safeDecodeJwtPayload(token) {
+            try {
+                if (!token || typeof token !== 'string') return null;
+                const parts = token.split('.');
+                if (parts.length !== 3) return null;
+
+                // Base64url decode
+                const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+                const decoded = atob(payload);
+                return JSON.parse(decoded);
+            } catch (err) {
+                return null;
+            }
+        }
+
+        /**
+         * Show error message to user
+         */
+        function showError(message) {
+            // Simple alert for now - could be improved with a toast notification
+            alert(message);
+        }
+
+        function initiateOAuthLogin() {
+            // Generate and store state for CSRF protection
+            const state = crypto.randomUUID();
+            sessionStorage.setItem('oauth_state', state);
+
+            // Build OAuth authorization URL
+            const params = new URLSearchParams({
+                client_id: 'preoffice',
+                redirect_uri: window.location.origin + '/oauth/callback',
+                response_type: 'code',
+                scope: 'openid profile email',
+                state,
+            });
+
+            window.location.href = `https://presuite.eu/api/oauth/authorize?${params}`;
+        }
+
+        function showLoginModal() {
+            // Check if already logged in
+            const token = sessionStorage.getItem('preoffice_token');
+            if (token) {
+                // Already logged in, redirect to predrive to access files
+                window.location.href = 'https://predrive.eu';
+                return;
+            }
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        function redirectToPredrive() {
+            window.location.href = 'https://predrive.eu/login?redirect=' + encodeURIComponent(window.location.href);
+        }
+
+        function updateUIForLoggedInUser() {
+            const user = JSON.parse(sessionStorage.getItem('preoffice_user') || 'null');
+            if (user) {
+                // Update Sign In button to show user name
+                const signInBtn = document.querySelector('.nav-links .btn-primary');
+                if (signInBtn) {
+                    signInBtn.textContent = user.name || user.email;
+                    signInBtn.onclick = function() {
+                        if (confirm('Sign out?')) {
+                            sessionStorage.removeItem('preoffice_token');
+                            sessionStorage.removeItem('preoffice_user');
+                            window.location.reload();
+                        }
+                    };
+                }
+            }
+        }
+
+        // Check login status on load
+        updateUIForLoggedInUser();
 
         function createNew(type) {
             currentDocType = type;
@@ -745,13 +944,16 @@
             document.getElementById('createModal').classList.remove('active');
         }
 
-        function showLogin() {
-            window.location.href = 'https://predrive.eu/login?redirect=' + encodeURIComponent(window.location.href);
-        }
-
         async function submitCreate() {
             const name = document.getElementById('docName').value;
             if (!name) return;
+
+            const token = sessionStorage.getItem('preoffice_token');
+            if (!token) {
+                closeModal();
+                showLoginModal();
+                return;
+            }
 
             const btn = document.getElementById('createBtn');
             const originalText = btn.innerHTML;
@@ -761,7 +963,10 @@
             try {
                 const response = await fetch('/api/create', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify({
                         type: currentDocType,
                         name: name,
@@ -775,7 +980,8 @@
                 }
             } catch (err) {
                 alert('Please sign in to create documents');
-                showLogin();
+                closeModal();
+                showLoginModal();
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
@@ -784,7 +990,10 @@
 
         // Close modal on escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') {
+                closeModal();
+                closeLoginModal();
+            }
             if (e.key === 'Enter' && document.getElementById('createModal').classList.contains('active')) {
                 submitCreate();
             }
@@ -793,6 +1002,10 @@
         // Close modal on background click
         document.getElementById('createModal').addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) closeModal();
+        });
+
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) closeLoginModal();
         });
     </script>
 </body>
