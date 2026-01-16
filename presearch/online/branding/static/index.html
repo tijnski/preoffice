@@ -12,29 +12,26 @@
            ===================================================== */
 
         :root {
-            /* Presearch Brand Colors */
-            --presearch-blue: #0190FF;
-            --presearch-blue-hover: #0177D6;
-            --presearch-blue-light: #E6F4FF;
-            --presearch-blue-muted: #5CB3FF;
-            --presearch-dark: #1E1E1E;
-            --presearch-dark-surface: #323232;
+            /* Presearch Brand Colors - presearch-web style */
+            --presearch-blue: #2D8EFF;
+            --presearch-blue-alt: #127FFF;
+            --presearch-blue-light: #EBF4FF;
+            --presearch-blue-dark: #80BAFF;
+            --presearch-dark: #191919;
+            --presearch-dark-surface: #1e1e1e;
 
             /* Background */
             --background-base: #FFFFFF;
-            --background-soft: #FAFBFC;
-            --background-tint: #E6F4FF;
+            --background-soft: #F4F4F4;
+            --background-tint: #EBF4FF;
 
             /* Text */
             --text-primary: #000000;
             --text-secondary: #494949;
             --text-tertiary: #6B7280;
 
-            /* Shadows */
-            --shadow-primary: 0 4px 14px rgba(1, 144, 255, 0.39);
-            --shadow-primary-hover: 0 6px 20px rgba(1, 144, 255, 0.45);
+            /* Shadows - minimal, no primary glow */
             --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-card-hover: 0 8px 30px rgba(1, 144, 255, 0.15);
 
             /* Borders */
             --border-default: #E8EAED;
@@ -75,7 +72,7 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--presearch-blue-hover);
+            background: var(--presearch-blue-alt);
         }
 
         /* =====================================================
@@ -173,11 +170,11 @@
             gap: 0.75rem;
             text-decoration: none;
             color: var(--text-primary);
-            transition: transform 0.2s ease;
+            transition: opacity 0.15s ease;
         }
 
         .logo:hover {
-            transform: scale(1.02);
+            opacity: 0.6;
         }
 
         .logo svg {
@@ -228,7 +225,7 @@
         }
 
         /* =====================================================
-           BUTTONS
+           BUTTONS - presearch-web style (flat + opacity hover)
            ===================================================== */
         .btn {
             padding: 0.75rem 1.5rem;
@@ -241,23 +238,16 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.2s ease;
+            transition: opacity 0.15s ease;
         }
 
         .btn-primary {
-            background: var(--presearch-blue);
+            background: var(--presearch-blue-alt);
             color: white;
-            box-shadow: var(--shadow-primary);
         }
 
         .btn-primary:hover {
-            background: var(--presearch-blue-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-primary-hover);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
+            opacity: 0.6;
         }
 
         .btn-secondary {
@@ -267,9 +257,7 @@
         }
 
         .btn-secondary:hover {
-            background: var(--presearch-blue-light);
-            border-color: var(--presearch-blue-hover);
-            transform: translateY(-1px);
+            opacity: 0.6;
         }
 
         /* =====================================================
@@ -342,13 +330,11 @@
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-card);
             cursor: pointer;
-            transition: all 0.2s ease-out;
+            transition: opacity 0.15s ease;
         }
 
         .app-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: var(--presearch-blue-light);
+            opacity: 0.8;
         }
 
         .app-icon {
@@ -360,11 +346,6 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
-            transition: transform 0.2s ease;
-        }
-
-        .app-card:hover .app-icon {
-            transform: scale(1.1);
         }
 
         .app-icon.writer { background: var(--presearch-blue-light); }
@@ -408,12 +389,12 @@
             text-align: center;
             padding: 1.5rem;
             border-radius: 12px;
-            transition: all 0.2s ease;
+            transition: opacity 0.15s ease;
         }
 
         .feature:hover {
             background: var(--background-soft);
-            transform: translateY(-2px);
+            opacity: 0.8;
         }
 
         .feature-icon {
@@ -441,13 +422,13 @@
         }
 
         .footer a {
-            color: var(--presearch-blue-muted);
+            color: var(--presearch-blue-dark);
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: opacity 0.15s ease;
         }
 
         .footer a:hover {
-            color: var(--presearch-blue-light);
+            opacity: 0.6;
         }
 
         .footer p {
@@ -457,7 +438,7 @@
         }
 
         /* =====================================================
-           MODAL - DARK GLASS STYLE
+           MODAL - Solid background (no glassmorphism)
            ===================================================== */
         .modal {
             display: none;
@@ -467,7 +448,6 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
             z-index: 200;
             align-items: center;
             justify-content: center;
@@ -505,7 +485,7 @@
         .modal-content input:focus {
             outline: none;
             border-color: var(--presearch-blue);
-            box-shadow: 0 0 0 3px rgba(1, 144, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(45, 142, 255, 0.1);
         }
 
         .modal-content input::placeholder {
@@ -519,29 +499,28 @@
         }
 
         /* =====================================================
-           DARK MODE
+           DARK MODE - presearch-web neutral grays
            ===================================================== */
         @media (prefers-color-scheme: dark) {
             :root {
-                --background-base: #1E1E1E;
-                --background-soft: #1E1E1E;
-                --background-tint: #252525;
-                --text-primary: #FFFFFF;
+                --background-base: #191919;
+                --background-soft: #1e1e1e;
+                --background-tint: #2e2e2e;
+                --text-primary: #e9e9e9;
                 --text-secondary: #9CA3AF;
                 --border-default: rgba(255, 255, 255, 0.1);
                 --border-card: rgba(255, 255, 255, 0.1);
                 --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
-                --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
             }
 
             body {
-                background: linear-gradient(135deg, #1E1E1E 0%, #252525 100%);
+                background: #191919;
                 color: var(--text-primary);
             }
 
             .header {
-                background: var(--presearch-dark);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                background: #1e1e1e;
+                border-bottom: 1px solid #383838;
                 box-shadow: none;
             }
 
@@ -558,13 +537,8 @@
             }
 
             .app-card {
-                background: #323232;
-                border-color: rgba(255, 255, 255, 0.1);
-            }
-
-            .app-card:hover {
-                background: #3A3A3A;
-                border-color: rgba(1, 144, 255, 0.3);
+                background: #2e2e2e;
+                border-color: #383838;
             }
 
             .app-card h3 {
@@ -572,11 +546,11 @@
             }
 
             .features-section {
-                background: #252525;
+                background: #1e1e1e;
             }
 
             .feature:hover {
-                background: #323232;
+                background: #2e2e2e;
             }
 
             .feature h3 {
@@ -584,9 +558,8 @@
             }
 
             .modal-content {
-                background: rgba(26, 26, 26, 0.95);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                backdrop-filter: blur(16px);
+                background: #1e1e1e;
+                border: 1px solid #383838;
             }
 
             .modal-content h2 {
@@ -594,8 +567,8 @@
             }
 
             .modal-content input {
-                background: #1E1E1E;
-                border-color: rgba(255, 255, 255, 0.1);
+                background: #2e2e2e;
+                border-color: #383838;
                 color: white;
             }
 
@@ -631,7 +604,7 @@
     <header class="header">
         <a href="/" class="logo">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" fill="#0190FF"/>
+                <circle cx="20" cy="20" r="18" fill="#2D8EFF"/>
                 <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="logo-text">Pre<span>Office</span> Online</span>
