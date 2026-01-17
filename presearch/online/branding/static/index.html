@@ -911,6 +911,120 @@
         // Hub API base URL for web3 auth endpoints
         const HUB_API_BASE = 'https://presuite.eu/api';
 
+        // Refresh token management
+        let isRefreshing = false;
+        let refreshPromise = null;
+
+        /**
+         * Get stored refresh token
+         */
+        function getRefreshToken() {
+            return sessionStorage.getItem('preoffice_refresh_token');
+        }
+
+        /**
+         * Store tokens
+         */
+        function storeTokens(accessToken, refreshToken, user) {
+            sessionStorage.setItem('preoffice_token', accessToken);
+            if (refreshToken) {
+                sessionStorage.setItem('preoffice_refresh_token', refreshToken);
+            }
+            if (user) {
+                sessionStorage.setItem('preoffice_user', JSON.stringify(user));
+            }
+        }
+
+        /**
+         * Clear all auth tokens
+         */
+        function clearTokens() {
+            sessionStorage.removeItem('preoffice_token');
+            sessionStorage.removeItem('preoffice_refresh_token');
+            sessionStorage.removeItem('preoffice_user');
+        }
+
+        /**
+         * Refresh the access token using the refresh token
+         */
+        async function refreshAccessToken() {
+            const refreshToken = getRefreshToken();
+            if (!refreshToken) {
+                return false;
+            }
+
+            // Prevent concurrent refresh attempts
+            if (isRefreshing && refreshPromise) {
+                return refreshPromise;
+            }
+
+            isRefreshing = true;
+            refreshPromise = (async () => {
+                try {
+                    const response = await fetch(`${HUB_API_BASE}/auth/refresh`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ refreshToken }),
+                    });
+
+                    if (!response.ok) {
+                        clearTokens();
+                        return false;
+                    }
+
+                    const data = await response.json();
+                    storeTokens(data.token, data.refreshToken, data.user);
+                    return true;
+                } catch (err) {
+                    clearTokens();
+                    return false;
+                } finally {
+                    isRefreshing = false;
+                    refreshPromise = null;
+                }
+            })();
+
+            return refreshPromise;
+        }
+
+        /**
+         * Make an authenticated API request with auto-refresh
+         */
+        async function authFetch(url, options = {}, retryOnUnauthorized = true) {
+            const token = sessionStorage.getItem('preoffice_token');
+
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(options.headers || {}),
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(url, {
+                ...options,
+                headers,
+            });
+
+            // Handle 401 - try to refresh token
+            if (response.status === 401 && retryOnUnauthorized) {
+                const refreshed = await refreshAccessToken();
+                if (refreshed) {
+                    // Retry with new token
+                    return authFetch(url, options, false);
+                }
+                // Refresh failed - clear session
+                clearTokens();
+                showLoginModal();
+                throw new Error('Session expired. Please log in again.');
+            }
+
+            return response;
+        }
+
         // Check for OAuth callback on page load
         (function handleOAuthCallback() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -970,13 +1084,12 @@
                     throw new Error('Invalid ID token');
                 }
 
-                // Store auth info securely (consider using httpOnly cookies in production)
-                sessionStorage.setItem('preoffice_token', data.access_token);
-                sessionStorage.setItem('preoffice_user', JSON.stringify({
+                // Store tokens (including refresh token from OAuth response)
+                storeTokens(data.access_token, data.refresh_token, {
                     id: idTokenPayload.sub,
                     email: idTokenPayload.email,
                     name: idTokenPayload.name,
-                }));
+                });
 
                 // Clean up URL and redirect to home
                 window.history.replaceState({}, '', '/');
@@ -1161,9 +1274,8 @@
                     throw new Error(verifyData.error?.message || 'Authentication failed');
                 }
 
-                // Success! Store token and user info
-                sessionStorage.setItem('preoffice_token', verifyData.token);
-                sessionStorage.setItem('preoffice_user', JSON.stringify(verifyData.user));
+                // Success! Store tokens and user info (including refresh token)
+                storeTokens(verifyData.token, verifyData.refreshToken, verifyData.user);
 
                 closeLoginModal();
                 updateUIForLoggedInUser();
@@ -1207,9 +1319,8 @@
                     throw new Error(data.message || 'Login failed');
                 }
 
-                // Store token and user info
-                sessionStorage.setItem('preoffice_token', data.token);
-                sessionStorage.setItem('preoffice_user', JSON.stringify(data.user));
+                // Store tokens and user info (including refresh token)
+                storeTokens(data.token, data.refreshToken, data.user);
 
                 closeLoginModal();
                 updateUIForLoggedInUser();
@@ -1232,10 +1343,21 @@
                 const signInBtn = document.querySelector('.nav-links .btn-primary');
                 if (signInBtn) {
                     signInBtn.textContent = user.name || user.email;
-                    signInBtn.onclick = function() {
+                    signInBtn.onclick = async function() {
                         if (confirm('Sign out?')) {
-                            sessionStorage.removeItem('preoffice_token');
-                            sessionStorage.removeItem('preoffice_user');
+                            // Call logout API to revoke tokens
+                            const token = sessionStorage.getItem('preoffice_token');
+                            if (token) {
+                                try {
+                                    await fetch(`${HUB_API_BASE}/auth/logout`, {
+                                        method: 'POST',
+                                        headers: { 'Authorization': `Bearer ${token}` },
+                                    });
+                                } catch (e) {
+                                    // Ignore errors - clear local state anyway
+                                }
+                            }
+                            clearTokens();
                             window.location.reload();
                         }
                     };
@@ -1280,12 +1402,8 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch('/api/create', {
+                const response = await authFetch('/api/create', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: JSON.stringify({
                         type: currentDocType,
                         name: name,
